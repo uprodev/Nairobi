@@ -887,6 +887,24 @@ footer {
     .top-line .nav-list li.current .number .check img {
       display: none; }
 
+.menu-responsive .nav-list li.current .number {
+  font-size: 0;
+  background: #fff;
+  z-index: 1111; }
+  .menu-responsive .nav-list li.current .number .check {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 5px solid #F27F0E;
+    z-index: 1111;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 100%; }
+    .menu-responsive .nav-list li.current .number .check img {
+      display: none; }
+
 .top-line .nav-list li.complete .number:after {
   background: #F27F0E; }
 
