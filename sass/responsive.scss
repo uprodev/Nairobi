@@ -247,6 +247,13 @@
     width: 100%;
     margin-bottom: 30px;
   }
+  .login figure{
+    display: none;
+  }
+  .login .form-wrap{
+    padding: 0;
+    width: 100%;
+  }
 }
 
 @media (max-width:575px) {
@@ -359,5 +366,22 @@
     justify-content: space-between;
     margin-bottom: 13px;
     width: 100%;
+  }
+  .login {
+    padding: 14px 0 70px;
+  }
+  .login h1, .login h2{
+    margin-bottom: 45px;
+  }
+  .login .form-wrap .input-wrap-login{
+    margin-bottom: 30px;
+  }
+  .login .form-wrap p{
+    margin-bottom: 32px;
+  }
+  .login .form-wrap .input-wrap-submit .btn-default{
+    font-size: 16px;
+    line-height: 44px;
+    padding-top: 2px;
   }
 }
