@@ -82,6 +82,34 @@
     background: transparent;
     -webkit-transition: all .4s ease;
     transition: all .4s ease; }
+    .menu-responsive .nice-select {
+      border: none !important;
+      color: #60484B;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 42px;
+      padding-left: 0;
+      float: inherit;
+      display: inline-block; }
+    .menu-responsive .nice-select .option {
+      position: relative; }
+      .menu-responsive .nice-select .option a {
+        display: block; }
+        .menu-responsive .nice-select .option a:after {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          content: '';
+          z-index: 10; }
+    .menu-responsive .nice-select:after {
+      border-bottom: 2px solid  #60484B;
+      border-right: 2px solid  #60484B;
+      margin-top: -6px; }
+    .menu-responsive .lang-wrap {
+      margin-bottom: 30px; }
     .menu-responsive .wrap {
       padding: 120px 40px 65px;
       width: 300px;
