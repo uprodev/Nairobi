@@ -1023,6 +1023,18 @@ header .nice-select:after {
 header .lang-wrap {
   margin-left: 30px; }
 
+.nice-select .option {
+  position: relative;
+  overflow: hidden; }
+  .nice-select .option a:after {
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    bottom: -50px;
+    right: -50px;
+    content: '';
+    display: block; }
+
 /*------------------------END-PAGE-LOGIN---------------------------*/
 
 /*# sourceMappingURL=styles.css.map */

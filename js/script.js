@@ -6,7 +6,7 @@ jQuery(document).ready(function ($) {
     return e.val(parseInt(e.val()) + 1), e.change(), !1
   }), $(".btn-count-minus").click(function () {
     var e = $(this).parent().find("input"), t = parseInt(e.val()) - 1;
-    return t = t < 1 ? 1 : t, e.val(t), e.change(), !1
+    return t = t < 0 ? 1 : t, e.val(t), e.change(), !1
   })
 
   //select
@@ -39,4 +39,38 @@ jQuery(document).ready(function ($) {
 
   });
 
+  //TABS
+  (function($){
+    jQuery.fn.lightTabs = function(options){
+
+      var createTabs = function(){
+        tabs = this;
+        i = 0;
+
+        showPage = function(i){
+          $(tabs).find(".tab-content").children("div").hide();
+          $(tabs).find(".tab-content").children("div").eq(i).show();
+          $(tabs).find(".tabs-menu").children("li").removeClass("is-active");
+          $(tabs).find(".tabs-menu").children("li").eq(i).addClass("is-active");
+        }
+
+        showPage(0);
+
+        $(tabs).find(".tabs-menu").children("li").each(function(index, element){
+          $(element).attr("data-page", i);
+          i++;
+        });
+
+        $(tabs).find(".tabs-menu li").children("a").click(function(e){
+          e.preventDefault()
+          let item = $(this).closest('li').index() + 1;
+          $('.tab-content .tab-item').hide();
+          $(".tab-content .tab-item:nth-child("+ item + ")").show()
+
+        });
+      };
+      return this.each(createTabs);
+    };
+  })(jQuery);
+  $(".tabs").lightTabs();
 });
