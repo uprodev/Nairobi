@@ -23,7 +23,7 @@
   .choose-block .content {
     padding: 40px; }
 
-  h1, h2 {
+  .content-width h1, .content-width h2 {
     font-size: 40px; }
 
   .choose-block h1, .choose-block h2 {
@@ -511,7 +511,7 @@
   .catalog {
     padding: 30px 0 0; }
 
-  h1, h2 {
+  .content-width h1, .content-width h2 {
     font-size: 44px; }
 
   .breadcrumb {

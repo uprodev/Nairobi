@@ -258,9 +258,9 @@ header.is-active {
 
 /*--------------------------------END-HEADER----------------------------------*/
 /*----------------------------CHOOSE-BLOCK----------------------------*/
-h1, h2 {
-  color: #3A1016;
+.content-width h1, .content-width h2 {
   text-align: center;
+  color: #3A1016;
   font-size: 64px;
   font-style: normal;
   font-weight: 600;
@@ -1675,6 +1675,11 @@ section .nice-select .option {
     font-weight: 700;
     line-height: 24px; }
 
-/*------------------------END-PAGE-CATALOG---------------------------*/
+footer .footer-form button {
+  height: 48px;
+  line-height: 46px; }
 
+/*------------------------END-PAGE-CATALOG---------------------------*/
+/*-------------------------PAGE-DELIVERY---------------------------*/
+/*------------------------END-PAGE-DELIVERY---------------------------*/
 /*# sourceMappingURL=styles.css.map */
