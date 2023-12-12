@@ -15,7 +15,49 @@
     font-size: 21px; }
 
   .bg-info .title {
-    font-size: 50px; } }
+    font-size: 50px; }
+
+  .top-line .logo-wrap {
+    width: 150px; }
+    .top-line .logo-wrap img {
+      width: 100%; }
+
+  .top-line {
+    padding: 30px 0; }
+
+  .top-menu > ul li a {
+    font-size: 18px; }
+
+  header .nice-select {
+    font-size: 18px; }
+
+  .top-menu .btn-wrap a {
+    height: 48px;
+    line-height: 46px;
+    padding: 0 40px;
+    font-size: 18px; }
+    .top-menu .btn-wrap a img {
+      -webkit-transform: scale(0.8);
+              transform: scale(0.8); }
+
+  .top-menu > ul li a img {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8); }
+
+  footer .logo-wrap {
+    width: 150px;
+    margin-bottom: 40px; }
+    footer .logo-wrap img {
+      width: 100%; }
+
+  footer .form-wrap .title {
+    font-size: 28px; }
+
+  footer .footer-menu ul li a {
+    font-size: 18px; }
+
+  footer {
+    padding-top: 60px; } }
 @media (max-width: 1280px) {
   .content-width {
     width: 960px; }
