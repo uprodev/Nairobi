@@ -73,4 +73,21 @@ jQuery(document).ready(function ($) {
     };
   })(jQuery);
   $(".tabs").lightTabs();
+
+  //slider
+  var swiperImg1 = new Swiper(".filter-slider-1", {
+    slidesPerView: 'auto',
+    spaceBetween: 15,
+    navigation: {
+      nextEl: ".next-filter-1",
+      prevEl: ".prev-filter-1",
+    },
+  });
+
+
+  //popup
+  $(".fancybox").fancybox({
+    touch:false,
+    autoFocus:false,
+  });
 });
