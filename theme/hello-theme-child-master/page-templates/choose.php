@@ -68,7 +68,7 @@ $max_kids = 6;
                             <p>Adults </p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                                <input type="text" name="count" max="<?= $max_adults ?>" value="2" class="form-control"/>
+                                <input type="text" name="count_adults" max="<?= $max_adults ?>" value="2" class="form-control"/>
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@ $max_kids = 6;
                             <p>Kids</p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                                <input type="text" name="count" max="<?= $max_kids ?>" value="1" class="form-control"/>
+                                <input type="text" name="count_kids" max="<?= $max_kids ?>" value="1" class="form-control"/>
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>
@@ -115,7 +115,7 @@ $max_kids = 6;
                                     if ($features)
                                         foreach ($features as $feature) { ?>
                                             <div class="check-item">
-                                                <input type="checkbox" name="feature-<?= $i ?>-<?= $feature->term_id ?>" id="feature-<?= $feature->term_id ?>-<?= $i ?>" value="<?= $feature->term_id ?>">
+                                                <input type="checkbox" name="feature[<?= $i ?>][<?= $feature->term_id ?>]" id="feature-<?= $feature->term_id ?>-<?= $i ?>" value="<?= $feature->term_id ?>">
                                                 <label for="feature-<?= $feature->term_id ?>-<?= $i ?>" class="round-check">
                                                     <img src="<?= get_field('icon', $feature)['url'] ?>" alt="">
                                                     <span class="text"><?= $feature->name ?> </span>
@@ -159,6 +159,7 @@ $max_kids = 6;
                         </label>
                     </div>
                 </div>
+                <input type="hidden" name="action" value="add_to_cart">
             </form>
         </div>
     </div>

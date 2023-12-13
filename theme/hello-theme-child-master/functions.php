@@ -5,6 +5,8 @@
  * @package HelloElementorChild
  */
 
+include 'inc/woo.php';
+include 'inc/ajax-actions.php';
 /**
  * Load child theme css and optional scripts
  *

@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
   change_price()
   $('.wrap-items input').change();
-  
+
   $('.wrap-items input').change(function(){
     change_price();
     var title = $(this).closest('.item').find('.text').html();
@@ -35,11 +35,7 @@ jQuery(document).ready(function ($) {
     })
 
 
-    $('.box-form').submit(function(e){
-      e.preventDefault();
-      var data = $(this).serialize();
-      console.log(data)
-  })
+
 
   function change_price() {
       var price = parseFloat($('.wrap-items input:checked').attr('data-price'));
@@ -54,6 +50,25 @@ jQuery(document).ready(function ($) {
       $('.box_price_total').html('€' + total);
   }
 
+
+  $('.box-form').submit(function(e){
+    e.preventDefault();
+    var data = $(this).serialize();
+
+    $.ajax({
+      url: '/wp-admin/admin-ajax.php',
+      data: data,
+      type: 'POST',
+      dataType: 'json',
+      success: function (data) {
+        if (data) {
+          console.log(data)
+
+        }
+      }
+    });
+
+  })
 
 
   //name="apply-to-all"
