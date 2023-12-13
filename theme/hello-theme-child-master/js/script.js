@@ -3,7 +3,9 @@ jQuery(document).ready(function ($) {
   //number col
   $(".btn-count-plus").click(function () {
     var e = $(this).parent().find("input");
-    return e.val(parseInt(e.val()) + 1), e.change(), !1
+    var max = parseInt(e.attr('max')),t = parseInt(e.val())+ 1
+    console.log(max, t)
+    return t = t < max ? t : max ,  e.val(t), e.change(), !1
   }), $(".btn-count-minus").click(function () {
     var e = $(this).parent().find("input"), t = parseInt(e.val()) - 1;
     return t = t < 0 ? 1 : t, e.val(t), e.change(), !1
