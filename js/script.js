@@ -143,4 +143,15 @@ jQuery(document).ready(function ($) {
     locale: localeEn,
     autoClose: true,
   });
+
+
+  //mask code
+  $('.code').mask("00000", {placeholder: "00000"});
+
+  //mask phone
+  $('.tel').mask("(000) 000-000", {placeholder: "(000) 000-000"});
+
+  //mask time
+  $('.time').mask("00-00", {placeholder: "00-00"});
+
 });

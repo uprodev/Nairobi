@@ -38,13 +38,13 @@
 								<span class="text">Select plan </span>
 							</a>
 						</li>
-						<li class="current">
+						<li class="current complete">
 							<a href="choose.html">
 								<span class="number">2<span class="check"><img src="img/icon-1.svg" alt=""></span> </span>
 								<span class="text">Register</span>
 							</a>
 						</li>
-						<li>
+						<li class="current">
 							<a href="choose.html">
 								<span class="number">3<span class="check"><img src="img/icon-1.svg" alt=""></span></span>
 								<span class="text">Address</span>
@@ -115,6 +115,7 @@
 					</figure>
 					<div class="form-wrap">
 						<form action="#" class="form-default">
+							<div class="sub-title">Adresse</div>
 							<div class="input-wrap input-wrap-login">
 								<label for="street">Rue et numéro</label>
 								<input type="text" id="street" name="street" >
@@ -132,26 +133,30 @@
 								<label for="ville">Ville</label>
 								<input type="text" id="ville" name="ville" >
 							</div>
-
-
-
-
-
-
-
-
+							<div class="input-wrap input-wrap-login input-wrap-50">
+								<label for="code">Code postal</label>
+								<input type="text" id="code" name="code" placeholder="00000" class="code">
+							</div>
+							<div class="input-wrap input-wrap-login input-wrap-50">
+								<label for="tel">Numéro de téléphone</label>
+								<input type="text" id="tel" name="tel" placeholder="(000) 000-000" class="tel">
+							</div>
 
 							<div class="sub-title">Où et quand voulez-vous être livré ?</div>
-							<div class="input-wrap input-wrap-login input-wrap-50">
+							<div class="input-wrap input-wrap-login input-wrap-50 input-img input-after">
 								<label for="date">Date</label>
-								<input type="text" id="date" name="date" class="date1">
+								<img src="img/icon-17-1.svg" alt="">
+								<input type="text" id="date" name="date" class="date1" placeholder="01/12/23">
+							</div>
+							<div class="input-wrap input-wrap-login input-wrap-50 input-img">
+								<label for="time">Heure</label>
+								<img src="img/icon-17-2.svg" alt="">
+								<input type="text" id="time" name="time" placeholder="00-00" class="time">
 							</div>
 							<div class="input-wrap-submit">
 								<button type="submit" class="btn-default">Continue</button>
 							</div>
-							<div class="link-wrap">
-								<a href="#">Continuer en tant qu’invité</a>
-							</div>
+
 						</form>
 					</div>
 				</div>
@@ -213,6 +218,7 @@
 	<script src="js/jquery.fancybox.min.js"></script>
 	<script src="js/jquery.nice-select.min.js"></script>
 	<script src="js/air-datepicker.js"></script>
+	<script src="js/jquery.mask.js"></script>
 	<script src="js/script.js"></script>
 </body>
 </html>

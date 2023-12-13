@@ -1681,5 +1681,54 @@ footer .footer-form button {
 
 /*------------------------END-PAGE-CATALOG---------------------------*/
 /*-------------------------PAGE-DELIVERY---------------------------*/
+.login .form-wrap .input-wrap-login label {
+  top: -10px;
+  z-index: 10; }
+
+.login .form-wrap .input-wrap-50 {
+  width: calc(50% - 10px); }
+
+.login .form-wrap .input-img {
+  position: relative; }
+  .login .form-wrap .input-img img {
+    position: absolute;
+    top: 12px;
+    left: 10px; }
+  .login .form-wrap .input-img input {
+    padding-left: 45px; }
+
+.login .form-wrap .nice-select {
+  width: 100%;
+  font-size: 16px;
+  border: 1px solid #B4B4B4 !important; }
+
+.delivery .sub-title {
+  width: 100%;
+  color: #3A1016;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+  margin-bottom: 20px; }
+.delivery h1 {
+  margin-bottom: 65px; }
+.delivery .content {
+  padding: 93px 85px 101px; }
+.delivery figure {
+  width: 47.5%; }
+.delivery .form-wrap {
+  padding-top: 0;
+  width: 47.5%; }
+.delivery .input-wrap + .sub-title {
+  margin: -4px 0 16px; }
+
+.delivery .form-wrap .input-wrap-login {
+  margin-bottom: 35px; }
+
+.login .form-wrap .input-wrap-login input {
+  line-height: 38px;
+  padding-top: 6px; }
+
 /*------------------------END-PAGE-DELIVERY---------------------------*/
+
 /*# sourceMappingURL=styles.css.map */
