@@ -20,6 +20,7 @@ function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_style('my-nice-select', get_stylesheet_directory_uri() . '/css/nice-select.css');
 	wp_enqueue_style('my-swiper', get_stylesheet_directory_uri() . '/css/swiper.min.css');
 	wp_enqueue_style('my-styles', get_stylesheet_directory_uri() . '/css/styles.css');
+	wp_enqueue_style('air-datepicker', get_stylesheet_directory_uri() . '/css/air-datepicker.css');
 	wp_enqueue_style('my-responsive', get_stylesheet_directory_uri() . '/css/responsive.css');
 	wp_enqueue_style(
 		'hello-elementor-child-style',
@@ -33,13 +34,24 @@ function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_script('my-swiper', get_stylesheet_directory_uri() . '/js/swiper.js', array(), false, true);
 	wp_enqueue_script('my-fancybox', get_stylesheet_directory_uri() . '/js/jquery.fancybox.min.js', array(), false, true);
 	wp_enqueue_script('my-nice-select', get_stylesheet_directory_uri() . '/js/jquery.nice-select.min.js', array(), false, true);
+	wp_enqueue_script('air-datepicker', get_stylesheet_directory_uri() . '/js/air-datepicker.js', array(), false, true);
 	wp_enqueue_script('my-script', get_stylesheet_directory_uri() . '/js/script.js', array(), false, true);
+	wp_enqueue_script('actions', get_stylesheet_directory_uri() . '/js/actions.js', array(), false, true);
+
+
+    if (!is_front_page()) {
+        wp_dequeue_style('elementor-global');
+        wp_dequeue_style( 'hello-elementor' );
+        wp_dequeue_style( 'elementor-frontend' );
+        wp_deregister_style( 'elementor-frontend' );
+    }
+
 }
 add_action( 'wp_enqueue_scripts', 'hello_elementor_child_enqueue_scripts', 20 );
 
 
 if( function_exists('acf_add_options_page') ) {
-	
+
 	acf_add_options_page(array(
 		'page_title' 	=> 'Main settings',
 		'menu_title'	=> 'Theme options',
