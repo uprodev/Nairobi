@@ -103,12 +103,12 @@
 
 	<main>
 
-		<section class="choose-block login">
+		<section class="choose-block login delivery">
 			<div class="content-width">
 
 				<div class="content">
 					<div class="title-wrap">
-						<h1>Se connecter</h1>
+						<h1>Informations de livraison</h1>
 					</div>
 					<figure>
 						<img src="img/img-1.jpg" alt="">
@@ -116,10 +116,36 @@
 					<div class="form-wrap">
 						<form action="#" class="form-default">
 							<div class="input-wrap input-wrap-login">
-								<label for="login">Email Address</label>
-								<input type="email" id="login" name="login" placeholder="example@mail.com">
+								<label for="street">Rue et numéro</label>
+								<input type="text" id="street" name="street" >
 							</div>
-							<p>En continuant, vous accepter de recevoir une newsletter quotidienne ainsi que nos <a href="#">Terms</a> et <a href="#">Privacy Policy</a></p>
+							<div class="input-wrap input-wrap-login input-wrap-50 select-block">
+								<label class="form-label" for="region">State/Province</label>
+								<select id="region">
+									<option value="0">Select Your Region</option>
+									<option value="1">Region 1</option>
+									<option value="2">Region 2</option>
+									<option value="3">Region 3</option>
+								</select>
+							</div>
+							<div class="input-wrap input-wrap-login input-wrap-50">
+								<label for="ville">Ville</label>
+								<input type="text" id="ville" name="ville" >
+							</div>
+
+
+
+
+
+
+
+
+
+							<div class="sub-title">Où et quand voulez-vous être livré ?</div>
+							<div class="input-wrap input-wrap-login input-wrap-50">
+								<label for="date">Date</label>
+								<input type="text" id="date" name="date" class="date1">
+							</div>
 							<div class="input-wrap-submit">
 								<button type="submit" class="btn-default">Continue</button>
 							</div>

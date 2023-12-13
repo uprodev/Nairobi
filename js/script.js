@@ -75,9 +75,15 @@ jQuery(document).ready(function ($) {
   $(".tabs").lightTabs();
 
   //slider
-  var swiperImg1 = new Swiper(".filter-slider-1", {
+  var swiperFilter1 = new Swiper(".filter-slider-1", {
     slidesPerView: 'auto',
     spaceBetween: 15,
+    noSwiping: false,
+    allowTouchMove:false,
+    touchRatio: 1,
+    freeMode: true,
+    preventClicks :true,
+    a11y: false,
     navigation: {
       nextEl: ".next-filter-1",
       prevEl: ".prev-filter-1",
@@ -89,5 +95,52 @@ jQuery(document).ready(function ($) {
   $(".fancybox").fancybox({
     touch:false,
     autoFocus:false,
+  });
+
+
+  /*datapicker*/
+  const localeEn = {
+    days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    today: 'Today',
+    clear: 'Clear',
+    dateFormat: 'MM/dd/yyyy',
+    timeFormat: 'hh:mm aa',
+    firstDay: 0
+  }
+
+  const localeFr = {
+    days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+    daysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+    daysMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+    months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+    monthsShort: ['Jan', 'Fév', 'Mars', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Dec'],
+    today: "Aujourd'hui",
+    clear: 'Effacer',
+    dateFormat: 'dd/MM/yyyy',
+    timeFormat: 'HH:mm',
+    firstDay: 1
+  }
+
+  const localeNl = {
+    days: ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'],
+    daysShort: ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'],
+    daysMin: ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'],
+    months: ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'],
+    monthsShort: ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+    today: 'Vandaag',
+    clear: 'Legen',
+    dateFormat: 'dd-MM-yyyy',
+    timeFormat: 'HH:mm',
+    firstDay: 0
+  }
+
+
+  new AirDatepicker('.date1', {
+    locale: localeEn,
+    autoClose: true,
   });
 });
