@@ -93,3 +93,32 @@ function custom_language_switcher(){
 
 	}
 }
+
+
+add_filter('bcn_breadcrumb_title', 'my_breadcrumb_title_swapper', 3, 10);
+function my_breadcrumb_title_swapper($title, $type, $id)
+{
+    if(in_array('home', $type))
+    {
+        $title = __('Home', 'Nairobi');
+    }
+    return $title;
+}
+
+
+function add_class_content($string, $p_class, $h_class) {
+
+    if (str_contains($string, '<h')) {
+        foreach (range(1,6) as $i) {
+            $from[] = "<h$i";
+            $to[] = '<h'. $i .' class="'. $h_class . '"';
+        }
+    } 
+    if (str_contains($string, '<p')){
+        $from[] = "<p";
+        $to[] = '<p class="'. $p_class . '"';
+    }
+
+    return str_replace ($from, $to, $string);
+
+}
