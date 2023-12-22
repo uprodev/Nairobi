@@ -16,7 +16,7 @@ Template Name: Catalog
         </div>
     </div>
     <div class="wrap-content">
-        <form action="#" class="form-default">
+        <form action="#" class="form-default filter-form">
             <div class="content-width">
                 <div class="filter-line">
                     <div class="left" id="filter">
@@ -28,34 +28,26 @@ Template Name: Catalog
                                             <input type="checkbox" id="filter-1-1" name="filter-1" checked>
                                             <label for="filter-1-1">All</label>
                                         </div>
-                                        <div class="swiper-slide">
-                                            <input type="checkbox" id="filter-1-2" name="filter-1">
-                                            <label for="filter-1-2">Main+Sides</label>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <input type="checkbox" id="filter-1-3" name="filter-1">
-                                            <label for="filter-1-3">Main+Sides</label>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <input type="checkbox" id="filter-1-4" name="filter-1">
-                                            <label for="filter-1-4">Main+Sides</label>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <input type="checkbox" id="filter-1-5" name="filter-1">
-                                            <label for="filter-1-5">Main+Sides</label>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <input type="checkbox" id="filter-1-6" name="filter-1">
-                                            <label for="filter-1-6">Main+Sides</label>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <input type="checkbox" id="filter-1-7" name="filter-1">
-                                            <label for="filter-1-7">Main+Sides</label>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <input type="checkbox" id="filter-1-8" name="filter-1">
-                                            <label for="filter-1-8">Main+Sides</label>
-                                        </div>
+
+                                        <?php
+                                        $terms = get_terms(
+                                            [
+                                                'taxonomy' => 'product_cat',
+                                                'exclude' => 'boxes'
+                                            ]
+                                        );
+
+                                        foreach ($terms as $term) {
+                                            $i++
+                                            ?>
+                                            <div class="swiper-slide">
+                                                <input type="checkbox" id="filter-1-<?= $i ?>" name="cats[]">
+                                                <label for="filter-1-<?= $i ?>"><?= $term->name ?></label>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
+
 
                                     </div>
 
@@ -66,7 +58,7 @@ Template Name: Catalog
 
                         </div>
 
-                        <?php 
+                        <?php
                         $terms = get_terms( [
                             'taxonomy' => 'pa_features',
                             'hide_empty' => false,
@@ -79,13 +71,13 @@ Template Name: Catalog
 
                                     <?php foreach ($terms as $term): ?>
                                         <div class="check-item">
-                                            <input type="checkbox" id="feature-<?= $term->term_id ?>" name="features">
+                                            <input type="checkbox" id="feature-<?= $term->term_id ?>" value="<?= $term->term_id ?>" name="features[]">
                                             <label for="feature-<?= $term->term_id ?>" class="round-check">
 
                                                 <?php if ($field = get_field('icon', 'term_' . $term->term_id)): ?>
                                                     <?= wp_get_attachment_image($field['ID'], 'full') ?>
                                                 <?php endif ?>
-                                                
+
                                                 <span class="text"><?= $term->name ?></span>
                                             </label>
                                         </div>
@@ -94,7 +86,7 @@ Template Name: Catalog
                                 </div>
                             </div>
                         <?php endif ?>
-                        
+
                     </div>
                     <div class="right">
                         <p><?php _e('Sort by', 'Nairobi') ?>:</p>
@@ -113,58 +105,15 @@ Template Name: Catalog
                     <a href="#sort" class="btn-img"><?php _e('Sort by', 'Nairobi') ?>: <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-14.svg" alt=""></a>
                 </div>
 
-                <?php 
-                $terms = get_terms( [
-                    'taxonomy' => 'product_cat',
-                    'hide_empty' => false,
-                ] );
-                ?>
 
-                <?php if ($terms): ?>
-                    <?php foreach ($terms as $term): ?>
-                        <?php if ($term->term_id == apply_filters('wpml_object_id', 45, 'product_cat') || $term->term_id == apply_filters('wpml_object_id', 46, 'product_cat') || $term->term_id == apply_filters('wpml_object_id', 47, 'product_cat')): ?>
-                        <div class="title-wrap">
-                            <p class="title"><?= $term->name ?></p>
-                            <div class="link-wrap">
-                                <a href="<?= get_term_link($term->term_id) ?>"><?php _e('View all', 'Nairobi') ?></a>
-                            </div>
-                        </div>
+                <div class="filter_output">
+                    <?php get_template_part('parts/products') ?>
+                </div>
 
-                        <?php 
-                        $args = array(
-                            'post_type' => 'product', 
-                            'posts_per_page' => 4,
-                            'tax_query' => array(
-                                array(
-                                    'taxonomy' => 'product_cat',
-                                    'field'    => 'id',
-                                    'terms'    => $term->term_id
-                                )
-                            ),
-                            'paged' => get_query_var('paged')
-                        );
-                        $wp_query = new WP_Query($args);
-                        if($wp_query->have_posts()): 
-                            ?>
-
-                            <div class="content">
-
-                                <?php while ($wp_query->have_posts()): $wp_query->the_post(); ?>
-                                    <?php get_template_part('parts/content', 'product') ?>
-                                <?php endwhile; ?>
-
-                            </div>
-
-                            <?php 
-                        endif;
-                        wp_reset_query(); 
-                        ?>
-
-                    <?php endif ?>
-                <?php endforeach ?>
-            <?php endif ?>
 
         </div>
+
+            <input type="hidden" name="action" value="filter">
     </form>
 
 </div>
@@ -176,11 +125,11 @@ Template Name: Catalog
         <?php if ($field = get_field('image')): ?>
             <?= wp_get_attachment_image($field['ID'], 'full') ?>
         <?php endif ?>
-        
+
         <?php if ($field = get_field('image_mobile')): ?>
             <?= wp_get_attachment_image($field['ID'], 'full', false, array('class' => 'mob')) ?>
         <?php endif ?>
-        
+
     </div>
     <div class="content-width">
         <div class="content">

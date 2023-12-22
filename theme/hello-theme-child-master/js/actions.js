@@ -71,5 +71,29 @@ jQuery(document).ready(function ($) {
   })
 
 
+  $('.filter-form [name]').change(function(){
+    $('.filter-form').submit()
+  })
+  $('.filter-form').submit(function(e){
+    e.preventDefault();
+    var data = $(this).serialize();
+
+    $.ajax({
+      url: '/wp-admin/admin-ajax.php',
+      data: data,
+      type: 'POST',
+      dataType: 'json',
+      success: function (data) {
+        if (data) {
+          console.log(data)
+
+          $('.filter_output').html(data.html)
+        }
+      }
+    });
+
+  })
+
+
   //name="apply-to-all"
 })

@@ -4,6 +4,7 @@
 $actions = [
 
     'add_to_cart',
+    'filter'
 
 
 ];
@@ -12,6 +13,13 @@ foreach ($actions as $action) {
     add_action("wp_ajax_nopriv_{$action}", $action);
 }
 
+
+/**
+ * add_to_cart
+ *
+ * @return void
+ * @throws Exception
+ */
 function add_to_cart()
 {
 
@@ -39,3 +47,16 @@ function add_to_cart()
     wp_die();
 }
 
+
+function filter()
+{
+
+    ob_start();
+    get_template_part('parts/products');
+    $html = ob_get_clean();
+
+    wp_send_json([
+        'data' => $_POST,
+        'html' => $html
+    ]);
+}
