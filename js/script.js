@@ -191,5 +191,17 @@ jQuery(document).ready(function ($) {
     }
   });
 
+  //open menu
+  $(document).on('click', '.mob-btn-filter a', function (e) {
+    e.preventDefault();
+    $('.catalog-menu .menu-right').addClass('is-active');
+  });
+
+  //close menu
+  $(document).on('click', '.close-menu a', function (e) {
+    e.preventDefault();
+    $('.catalog-menu .menu-right').removeClass('is-active');
+  });
+
 
 });

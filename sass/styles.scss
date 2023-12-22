@@ -2295,7 +2295,7 @@ footer .footer-form button{
     .person-product:last-child{
       margin-bottom: 0;
     }
-    .input-number{
+    .menu-right .input-number{
       position: absolute;
       z-index: 9;
       bottom: 0;
@@ -2370,14 +2370,14 @@ footer .footer-form button{
       }
     }
   }
-  .input-number{
+  .menu-right .input-number{
     width: 89px;
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
     position: absolute;
-    left: 0;
     bottom: 0;
+    right: 0;
     .btn-count{
       width: 29px;
       height: 29px;
@@ -2399,5 +2399,12 @@ footer .footer-form button{
       padding-top: 4px;
     }
   }
+}
+
+.mob-btn-filter{
+  display: none;
+}
+.close-menu{
+  display: none;
 }
 /*------------------------END-PAGE-MENU---------------------------*/

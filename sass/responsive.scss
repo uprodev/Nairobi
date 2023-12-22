@@ -99,6 +99,56 @@
   .plans .input-wrap-big > label .img-wrap img{
     width: 40px;
   }
+  .mob-btn-filter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    position: absolute;
+    top: -4px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    z-index: 10;
+    img{
+      width: 100%;
+    }
+  }
+  .catalog-menu .menu-left{
+    width: 100%;
+    position: relative;
+  }
+  .catalog-menu .menu-right{
+    position: absolute;
+    top: 0;
+    right: -500px;
+    transition: all .4s ease;
+    background: #fff;
+    width: 400px;
+    padding: 30px 20px;
+    z-index: 100;
+  }
+  .catalog-menu .menu-right.is-active{
+    right: 0;
+  }
+  .catalog .wrap-content{
+    position: relative;
+  }
+  .catalog-menu{
+    overflow: hidden;
+  }
+  .close-menu{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 15px;
+    right: 15px;
+    z-index: 999;
+    img{
+      width: 100%;
+    }
+  }
 }
 
 @media (max-width:991px) {
@@ -464,6 +514,9 @@
   .plans .input-wrap-big > label .img-wrap img {
     width: 33px;
   }
+  .mob-btn-filter{
+    top: 19px;
+  }
 }
 
 @media (max-width:575px) {
@@ -702,5 +755,11 @@
     margin-left: -23px;
     min-width: calc(100% + 23px);
     justify-content: flex-start;
+  }
+  .mob-btn-filter{
+    top: -40px;
+  }
+  .catalog-menu .menu-right{
+    width: 320px;
   }
 }
