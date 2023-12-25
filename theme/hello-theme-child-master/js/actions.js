@@ -5,7 +5,22 @@ jQuery(document).ready(function ($) {
   $('.wrap-items input').change(function(){
     change_price();
     var title = $(this).closest('.item').find('.text').html();
-    $('.sub-title-box').html(title)
+    $('.sub-title-box').html(title);
+    var val = $(this).val();
+
+    if ('regular' === val) {
+      $('.total-block .total-wrap').hide();
+      $('.input-wrap-characteristics').hide();
+      var title = $('.select-plan').attr('data-title-reg');
+      $('.select-plan').html(title);
+      $('[name="action"]').val('select_meals');
+    } else {
+      $('.total-block .total-wrap').show();
+      $('.input-wrap-characteristics').show();
+      var title = $('.select-plan').attr('data-title');
+      $('.select-plan').html(title);
+      $('[name="action"]').val('add_to_cart');
+    }
   })
     $('.input-wrap-number-col').change(function(){
       change_price()
@@ -64,6 +79,10 @@ jQuery(document).ready(function ($) {
         if (data) {
           console.log(data)
 
+          if (data.url) {
+            location.href = data.url
+          }
+
         }
       }
     });
@@ -93,6 +112,78 @@ jQuery(document).ready(function ($) {
     });
 
   })
+
+
+  $(document).on('click', '.add_to_cart', function(e){
+    e.preventDefault();
+    var product_id = $(this).attr('data-product_id');
+    var qty = $(this).closest('.item').find('input').val();
+    var meta = $('[name="person"]').val();
+
+    $('.mini-cart').block({
+      message: null,
+      overlayCSS: {
+        background: '#fff',
+        opacity: 0.4
+      }
+    })
+
+    $.ajax({
+      url: wc_add_to_cart_params.ajax_url,
+      type:'POST',
+      data: {
+        action: 'add_to_cart',
+        product_id: product_id,
+        meta: meta,
+        qty: qty
+      },
+      success: function (data) {
+        $( document.body ).trigger( 'wc_fragment_refresh' );
+
+      },
+    });
+  })
+
+
+  /**
+   * cart
+   */
+
+  $(document).on('change', '.mini-cart input', function () {
+    var item_hash = $(this)
+      .attr('name')
+      .replace(/cart\[([\w]+)\]\[qty\]/g, '$1');
+    var item_quantity = $(this).val();
+    var currentVal = parseFloat(item_quantity);
+
+
+    $('.mini-cart').block({
+      message: null,
+      overlayCSS: {
+        background: '#fff',
+        opacity: 0.4
+      }
+    })
+
+
+    $.ajax({
+      type: 'POST',
+      url: wc_add_to_cart_params.ajax_url,
+      data: {
+        action: 'qty_cart',
+        hash: item_hash,
+        quantity: currentVal,
+      },
+      success: function (data) {
+        $(document.body).trigger('wc_update_cart');
+        $( document.body ).trigger( 'wc_fragment_refresh' );
+      },
+    });
+  });
+
+
+
+
 
 
   //name="apply-to-all"
