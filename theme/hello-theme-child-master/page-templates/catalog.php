@@ -45,7 +45,7 @@ for ($i=1; $i<=$kids; $i++ ) {
                                     <div class="swiper filter-slider filter-slider-1">
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
-                                                <input type="checkbox" id="filter-1-1" name="filter-1" checked>
+                                                <input type="checkbox" id="filter-1-1" value="" name="cat" checked>
                                                 <label for="filter-1-1">All</label>
                                             </div>
 
@@ -53,7 +53,9 @@ for ($i=1; $i<=$kids; $i++ ) {
                                             $terms = get_terms(
                                                 [
                                                     'taxonomy' => 'product_cat',
-                                                    'exclude' => 'boxes'
+                                                    'exclude' => 31,
+                                                    'include' => get_queried_object()->taxonomy == 'product_cat' ? [get_queried_object_id()] : ''
+
                                                 ]
                                             );
 
@@ -61,7 +63,7 @@ for ($i=1; $i<=$kids; $i++ ) {
                                                 $i++
                                                 ?>
                                                 <div class="swiper-slide">
-                                                    <input type="checkbox" id="filter-1-<?= $i ?>" name="cats[]">
+                                                    <input type="radio" id="filter-1-<?= $i ?>" value="<?= $term->term_id ?>" name="cat">
                                                     <label for="filter-1-<?= $i ?>"><?= $term->name ?></label>
                                                 </div>
                                             <?php
@@ -82,6 +84,7 @@ for ($i=1; $i<=$kids; $i++ ) {
                             $terms = get_terms( [
                                 'taxonomy' => 'pa_features',
                                 'hide_empty' => false,
+                                'include' => get_queried_object()->taxonomy == 'product_cat' ? [get_queried_object_id()] : ''
                             ] );
                             ?>
 
@@ -111,11 +114,20 @@ for ($i=1; $i<=$kids; $i++ ) {
                         <div class="right">
                             <p><?php _e('Sort by', 'Nairobi') ?>:</p>
                             <div class="select-block ">
+
                                 <label class="form-label" for="lang"></label>
-                                <select id="lang">
-                                    <option value="0">Latest</option>
-                                    <option value="1">Feature</option>
-                                    <option value="2">Release date</option>
+                                <select id="lang" name="orderby">
+                                    <?php
+                                    $sort = array(
+                                        'menu_order' => __( 'Default sorting', 'woocommerce' ),
+                                        'popularity' => __( 'By popularity', 'woocommerce' ),
+                                        'date'       => __( 'By latest', 'woocommerce' ),
+                                        'price'      => __( 'By price: low to high', 'woocommerce' ),
+                                        'price-desc' => __( 'By price: high to low', 'woocommerce' ),
+                                    );
+                                    foreach ($sort as $key => $option) {  ?>
+                                        <option value="<?= $key ?>"><?= $option ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>

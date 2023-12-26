@@ -6,6 +6,8 @@ Template Name: Choose
 
 $max_adults = 8;
 $max_kids = 6;
+$max_meals = 9;
+$min_meals = 4;
 
 ?>
 
@@ -80,6 +82,16 @@ $max_kids = 6;
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>
+
+                        <div class="number-item num-meals" style="display: none">
+                            <p>Meals</p>
+                            <div class="input-number ">
+                                <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
+                                <input type="text" name="count_meals" min="<?= $min_meals ?>" max="<?= $max_meals ?>" value="<?= $min_meals ?>" class="form-control"/>
+                                <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="input-wrap input-wrap-characteristics tabs">
                         <p class="title">3. Personal characteristics</p>
@@ -115,7 +127,7 @@ $max_kids = 6;
                                     if ($features)
                                         foreach ($features as $feature) { ?>
                                             <div class="check-item">
-                                                <input type="checkbox" name="feature[<?= $i ?>][<?= $feature->term_id ?>]" id="feature-<?= $feature->term_id ?>-<?= $i ?>" value="<?= $feature->term_id ?>">
+                                                <input type="checkbox" name="feature[<?= $i ?>][]" id="feature-<?= $feature->term_id ?>-<?= $i ?>" value="<?= $feature->name ?>">
                                                 <label for="feature-<?= $feature->term_id ?>-<?= $i ?>" class="round-check">
                                                     <img src="<?= get_field('icon', $feature)['url'] ?>" alt="">
                                                     <span class="text"><?= $feature->name ?> </span>

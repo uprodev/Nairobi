@@ -19,4 +19,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+//get_template_part('page-templates/catalog');
 wc_get_template( 'archive-product.php' );

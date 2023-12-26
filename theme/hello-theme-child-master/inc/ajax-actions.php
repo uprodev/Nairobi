@@ -6,7 +6,9 @@ $actions = [
     'add_to_cart',
     'select_meals',
     'filter',
-    'qty_cart'
+    'qty_cart',
+    'login_1',
+    'login_2'
 
 
 ];
@@ -24,30 +26,66 @@ foreach ($actions as $action) {
  */
 function add_to_cart()
 {
+    WC()->cart->empty_cart();
+    $product_id = (int)$_POST['product_id'] ? (int)$_POST['product_id'] : (int)$_POST['product'];
+    $count = (int)$_POST['count_kids'] + (int)$_POST['count_adults'];
+    $features = $_POST['feature'];
+   // $features = array_slice($features, 0, $count);
 
-        $product_id = (int)$_POST['product_id'] ? (int)$_POST['product_id'] : (int)$_POST['product'];
-        $count = (int)$_POST['count_kids'] + (int)$_POST['count_adults'];
-        $features = $_POST['feature'];
-        $features = array_slice($features, 0, $count);
+    if ($_POST['meta']) {
+        $features = $_POST['meta'];
+        $count = $_POST['qty'] ?  $_POST['qty'] : 1;
+    }
 
-        if ($_POST['meta']) {
-            $features = $_POST['meta'];
-            $count = $_POST['qty'] ?  $_POST['qty'] : 1;
+
+    $person_cart_qty = [];
+    foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+        if (!$cart_item['meta'])
+            continue;
+        $person_cart_qty[$cart_item['meta']] += $cart_item['quantity'] ;
+
+    }
+    foreach ($person_cart_qty as $key=>$qty) {
+
+        if ($qty+$count > 9 && $features == $key)
+            $msg = __('You have reached max 9 meals for that person', 'nairobi');
+    }
+
+
+
+
+    if ($_POST['count_kids'] || $_POST['count_adults']) {
+        for ($i=1; $i<= $_POST['count_adults'] ; $i++ ) {
+            $key =  'person';
+            $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
         }
 
+        for ($i=1; $i<=$_POST['count_kids']; $i++ ) {
+            $key =   'kid' ;
+            $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
+        }
 
-//    $variation_id = (int)$_GET['variation_id'];
-//    $qty = $_GET['qty'] > 0 ? (int)$_GET['qty'] : 1;
-    $added = WC()->cart->add_to_cart($product_id, $count, '','', ['meta' => $features]);
-//
-//
-//
-//    $count = WC()->cart->get_cart_contents_count();
+        $l = 1;
+        foreach ($persons as $key => $person) {
 
-    wp_send_json_success(
+            $added = WC()->cart->add_to_cart($product_id, 1, '','', ['meta' => $person, 'features' => $features[$l]]);
+            $l++;
+        }
+        $url = get_permalink(810);
+    } else {
+        if (!$msg)
+            $added = WC()->cart->add_to_cart($product_id, $count, '','', ['meta' => $features]);
+
+    }
+
+
+
+    wp_send_json(
         [
-            'count' => $features,
-            'd' => $_POST,
+            'count' => $_POST['feature'],
+            'd' => $person_cart_qty,
+            'msg' => $msg,
+            'url' => $url
         ]
     );
 
@@ -88,6 +126,7 @@ function select_meals() {
     WC()->cart->empty_cart();
     WC()->session->set('adults', $_POST['count_adults']);
     WC()->session->set('kids', $_POST['count_kids']);
+    WC()->session->set('meals', $_POST['count_meals']);
 
 
     wp_send_json([
@@ -113,9 +152,56 @@ function qty_cart()
     $passed_validation  = apply_filters('woocommerce_update_cart_validation', true, $cart_item_key, $product_values, $product_quantity);
 
 
-    if ($passed_validation) {
+    if ($product_quantity > 9) {
+        $msg = __('You have reached max 9 meals for that person');
+    }
+
+    if ($passed_validation && !$msg) {
         WC()->cart->set_quantity($cart_item_key, $product_quantity, true);
+    } else {
+        wp_send_json([
+            'msg' => $msg,
+
+        ]);
     }
 
     die();
+}
+
+
+/**
+ * login
+ */
+
+function login_1() {
+   if (is_email($_POST['email'])) {
+        $url = get_permalink(813);
+        WC()->customer->set_billing_email($_POST['email']);
+   } else {
+       $msg = '<br><p>' .  __('E-mail is incorrect', 'nairobi') .'</p>';
+   }
+
+    wp_send_json([
+        'email' => is_email($_POST['email']),
+        'url' => $url,
+        'msg' => $msg
+    ]);
+
+}
+
+function login_2() {
+    $url = get_permalink(578);
+    WC()->customer->set_billing_address_1($_POST['street']);
+    WC()->customer->set_billing_city($_POST['ville']);
+    WC()->customer->set_billing_city($_POST['ville']);
+    WC()->customer->set_billing_postcode($_POST['code']);
+    WC()->session->set('date', $_POST['date']);
+    WC()->session->set('time',$_POST['time']);
+
+    wp_send_json([
+
+        'url' => $url,
+        'msg' => $msg
+    ]);
+
 }

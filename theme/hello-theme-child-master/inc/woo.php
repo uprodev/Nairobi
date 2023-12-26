@@ -5,10 +5,18 @@
 function wk_get_item_data( $item_data, $cart_item_data ) {
     if ( isset( $cart_item_data['meta'] ) ) {
         $item_data[] = array(
-            'key'   => __( 'Persons', 'webkul' ),
-            'value' => serialize( $cart_item_data['meta'] ),
+            'key'   => __( 'Persons', 'nairobi' ),
+            'value' =>  $cart_item_data['meta'],
         );
     }
+
+    if ( isset( $cart_item_data['features'] ) ) {
+        $item_data[] = array(
+            'key'   => __( 'Features', 'nairobi' ),
+            'value' => json_encode( $cart_item_data['features'] ),
+        );
+    }
+
     return $item_data;
 }
 add_filter( 'woocommerce_get_item_data', 'wk_get_item_data', 999, 2 );

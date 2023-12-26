@@ -1,4 +1,9 @@
 jQuery(document).ready(function ($) {
+
+  /**
+   * change_price
+   */
+
   change_price()
   $('.wrap-items input').change();
 
@@ -11,10 +16,12 @@ jQuery(document).ready(function ($) {
     if ('regular' === val) {
       $('.total-block .total-wrap').hide();
       $('.input-wrap-characteristics').hide();
+      $('.num-meals').show();
       var title = $('.select-plan').attr('data-title-reg');
       $('.select-plan').html(title);
       $('[name="action"]').val('select_meals');
     } else {
+      $('.num-meals').hide();
       $('.total-block .total-wrap').show();
       $('.input-wrap-characteristics').show();
       var title = $('.select-plan').attr('data-title');
@@ -50,6 +57,9 @@ jQuery(document).ready(function ($) {
     })
 
 
+  /**
+   * change_price
+   */
 
 
   function change_price() {
@@ -65,6 +75,10 @@ jQuery(document).ready(function ($) {
       $('.box_price_total').html('€' + total);
   }
 
+
+  /**
+   * select box
+   */
 
   $('.box-form').submit(function(e){
     e.preventDefault();
@@ -90,13 +104,23 @@ jQuery(document).ready(function ($) {
   })
 
 
+  /**
+   * filter
+   */
+
   $('.filter-form [name]').change(function(){
     $('.filter-form').submit()
   })
   $('.filter-form').submit(function(e){
     e.preventDefault();
     var data = $(this).serialize();
-
+    $('.filter_output > div').block({
+      message: null,
+      overlayCSS: {
+        background: '#fff',
+        opacity: 0.4
+      }
+    })
     $.ajax({
       url: '/wp-admin/admin-ajax.php',
       data: data,
@@ -120,7 +144,7 @@ jQuery(document).ready(function ($) {
     var qty = $(this).closest('.item').find('input').val();
     var meta = $('[name="person"]').val();
 
-    $('.mini-cart').block({
+    $('.mini-cart, .total-block').block({
       message: null,
       overlayCSS: {
         background: '#fff',
@@ -138,8 +162,20 @@ jQuery(document).ready(function ($) {
         qty: qty
       },
       success: function (data) {
-        $( document.body ).trigger( 'wc_fragment_refresh' );
+        if (data.msg) {
+          alert(data.msg)
+        }
 
+        if (data.url) {
+          location.href = data.url
+        }
+
+        $( document.body ).trigger( 'wc_fragment_refresh' );
+        console.log(data)
+
+        setTimeout(function(){
+          select_current_user()
+        }, 500)
       },
     });
   })
@@ -175,16 +211,97 @@ jQuery(document).ready(function ($) {
         quantity: currentVal,
       },
       success: function (data) {
+        if (data.msg) {
+          alert(data.msg)
+        }
+
         $(document.body).trigger('wc_update_cart');
-        $( document.body ).trigger( 'wc_fragment_refresh' );
+        $( document.body ).trigger( 'wc_fragment_refresh');
+        setTimeout(function(){
+          select_current_user()
+        }, 500)
+
       },
     });
   });
 
 
+  /**
+   * persons
+   */
+  $(document).on('change', '#person', function () {
+    select_current_user()
+  })
+
+  function select_current_user() {
+    var val = $('#person').val();
+    $('.person-item-wrap').hide()
+    $('.' + val).show()
+
+    console.log(val)
+  }
+
+  /**
+   * complete-order
+   */
+
+  $(document).on('click', '.complete-order', function (e) {
+    e.preventDefault();
+    var valid = $(this).attr('data-valid');
+    if (valid == 'valid') {
+
+    } else {
+      alert( $(this).attr('data-msg'))
+    }
+  })
 
 
+  $(document).on('click', '.show-all', function (e) {
+    e.preventDefault();
+    $(this).closest('.title-wrap').next('.content').find('.item').show()
+  })
 
+
+  /**
+   * login
+   */
+
+  $('.form-login').submit(function(e){
+    e.preventDefault();
+    var data = $(this).serialize();
+
+
+    $('.form-login').block({
+      message: null,
+      overlayCSS: {
+        background: '#fff',
+        opacity: 0.4
+      }
+    })
+    $('.result').html('')
+    $.ajax({
+      url: '/wp-admin/admin-ajax.php',
+      data: data,
+      type: 'POST',
+      dataType: 'json',
+      success: function (data) {
+        if (data) {
+          console.log(data)
+
+          if (data.url) {
+            location.href = data.url
+          }
+          if (data.msg) {
+            $('.result').html(data.msg)
+          }
+
+          $('.form-login').unblock()
+
+        }
+      }
+    });
+
+  })
 
   //name="apply-to-all"
 })
