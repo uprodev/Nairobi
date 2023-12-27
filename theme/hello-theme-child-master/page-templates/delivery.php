@@ -28,11 +28,17 @@ Template Name: Delivery
                     </div>
                     <div class="input-wrap input-wrap-login input-wrap-50 select-block">
                         <label class="form-label" for="region">State/Province</label>
-                        <select id="region">
-                            <option value="0">Select Your Region</option>
-                            <option value="1">Region 1</option>
-                            <option value="2">Region 2</option>
-                            <option value="3">Region 3</option>
+                        <?php
+                        $people_json = file_get_contents(get_stylesheet_directory() . '/inc/france.json');
+                        $decoded_json = json_decode($people_json, true);
+
+                        ?>
+                        <select id="region" name="billing_state">
+                            <option value="">Select Your Region</option>
+                            <?php foreach ($decoded_json as $item) { ?>
+                                <option   value="<?= $item['name'] ?>"><?= $item['name'] ?></option>
+                            <?php } ?>
+
                         </select>
                     </div>
                     <div class="input-wrap input-wrap-login input-wrap-50">

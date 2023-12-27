@@ -38,6 +38,7 @@ function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_script('my-fancybox', get_stylesheet_directory_uri() . '/js/jquery.fancybox.min.js', array(), false, true);
 	wp_enqueue_script('my-nice-select', get_stylesheet_directory_uri() . '/js/jquery.nice-select.min.js', array(), false, true);
 	wp_enqueue_script('air-datepicker', get_stylesheet_directory_uri() . '/js/air-datepicker.js', array(), false, true);
+	wp_enqueue_script('mask', get_stylesheet_directory_uri() . '/js/jquery.mask.js', array(), false, true);
 	wp_enqueue_script('my-script', get_stylesheet_directory_uri() . '/js/script.js', array(), false, true);
 	wp_enqueue_script('actions', get_stylesheet_directory_uri() . '/js/actions.js', array(), false, true);
 
@@ -48,6 +49,8 @@ function hello_elementor_child_enqueue_scripts() {
         wp_dequeue_style( 'elementor-frontend' );
         wp_deregister_style( 'elementor-frontend' );
     }
+
+    wp_enqueue_style('woocommerce_stylesheet',false,'1.0',"all");
 
 }
 add_action( 'wp_enqueue_scripts', 'hello_elementor_child_enqueue_scripts', 20 );
@@ -122,4 +125,25 @@ function add_class_content($string, $p_class, $h_class) {
 
     return str_replace ($from, $to, $string);
 
+}
+
+
+function get_persons() {
+    $adults = WC()->session->get('adults');
+    $kids = WC()->session->get('kids');
+    $persons = [];
+
+
+    for ($i=1; $i<=$adults ; $i++ ) {
+        $key =  'person';
+        $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
+    }
+
+    for ($i=1; $i<=$kids; $i++ ) {
+        $key =   'kid' ;
+        $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
+
+    }
+
+    return $persons;
 }

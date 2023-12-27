@@ -7,7 +7,7 @@ $steps = [
         ],
     __('Register' , 'nairobi') =>
         [
-            is_page_template('page-templates/login.php') ? 'current' : (is_page_template('page-templates/delivery.php') ? 'active complete' : ''),
+            is_page_template('page-templates/login.php') ? 'current' : (is_page_template('page-templates/delivery.php') || is_checkout() ? 'active complete' : ''),
             810
         ],
     __('Address' , 'nairobi') =>

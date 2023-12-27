@@ -19,42 +19,36 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$adults = WC()->session->get('adults');
-$kids = WC()->session->get('kids');
+
 $meals = WC()->session->get('meals');
 
 
-
-for ($i=1; $i<=$adults ; $i++ ) {
-    $key =  'person';
-    $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
-}
-
-for ($i=1; $i<=$kids; $i++ ) {
-    $key =   'kid' ;
-    $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
-}
-
+$persons = get_persons();
 
 
 
 //qty
 $person_cart_qty = $person_cart_totals = $person_cart_valid = [];
-foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-    if (!$cart_item['meta'])
-        continue;
-    $person_cart_qty[$cart_item['meta']] += $cart_item['quantity'] ;
-    $person_cart_totals[$cart_item['meta']] += $cart_item['line_subtotal'] ;
-}
 
 
 //valid
+
+foreach ($persons as $key=>$person) {
+    $person_cart_qty[$key] = 0;
+    foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+        if ($cart_item['meta'] != $key)
+            continue;
+        $person_cart_qty[$key] += $cart_item['quantity'] ;
+        $person_cart_totals[$key] += $cart_item['line_subtotal'] ;
+
+    }
+}
+
+
 foreach ($person_cart_qty as $key=>$single_person) {
     $person_cart_valid[$key] = $person_cart_qty[$key] >= $meals ? 'valid' : 'invalid' ;
 }
 $total_valid = array_count_values(array_values($person_cart_valid));
-
-
 
 
 do_action( 'woocommerce_before_mini_cart' );
@@ -170,7 +164,7 @@ do_action( 'woocommerce_before_mini_cart' );
             <div class="btn-wrap">
                 <a
                     data-msg="<?= __('Please add all necessary meals to each person','nairobi') ?>"
-                    href="" data-valid="<?= count($total_valid['invalid']) > 0 ? 'invalid' : 'valid' ?>" type="submit" class="btn-default complete-order"><?= __('Complete order', 'nairobi') ?> </a>
+                    href="<?= get_permalink(810) ?>" data-valid="<?= count($total_valid['invalid']) > 0 ? 'invalid' : 'valid' ?>" type="submit" class="btn-default complete-order"><?= __('Complete order', 'nairobi') ?> </a>
             </div>
 
         </div>

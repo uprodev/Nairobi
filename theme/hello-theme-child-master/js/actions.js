@@ -5,7 +5,9 @@ jQuery(document).ready(function ($) {
    */
 
   change_price()
+  change_persons()
   $('.wrap-items input').change();
+  $('.input-wrap-number-col').change();
 
   $('.wrap-items input').change(function(){
     change_price();
@@ -29,32 +31,45 @@ jQuery(document).ready(function ($) {
       $('[name="action"]').val('add_to_cart');
     }
   })
-    $('.input-wrap-number-col').change(function(){
-      change_price()
-      var a,k
-      a = $('.num-adults input').val();
-      k = $('.num-kids input').val();
 
-      $('.persons').html('');
-      for (var i=1;i<=a;i++) {
-        $('.persons').append('<li class="option"><a href="#">Person '+ i +'</a></li>');
-      }
-      for (var i=1;i<=k;i++) {
-        $('.persons').append('<li class="option"><a href="#">Kid '+ i +'</a></li>');
-      }
+  $('.input-wrap-number-col').change(function(){
+    change_price();
+    change_persons();
+  })
 
-      $(".tabs").lightTabs();
-    })
+  function change_persons()  {
+    var a,k
+    a = parseInt($('.num-adults input').val());
+    k = parseInt($('.num-kids input').val());
+    $('.tab-item input').attr('name', '')
 
-    $('.check-item input').change(function(){
-      change_price()
-      var val = $(this).val();
-      var prop = $(this).prop('checked');
-      var apply = $('[name="apply-to-all"]').prop('checked');
-      if (apply) {
-        $('.tab-content-features [value="'+ val +'"]' ).prop('checked', prop);
-      }
-    })
+    $('.persons').html('');
+    for (var i=1;i<=a;i++) {
+      $('.persons').append('<li class="option"><a href="#">Person '+ i +'</a></li>');
+      $('.tab-item').eq(i-1).find('.check-item input').each(function(){
+        $(this).attr('name', 'feature[person-'+ i +'][]')
+      })
+
+    }
+    for (var i=1;i<=k;i++) {
+      $('.persons').append('<li class="option"><a href="#">Kid '+ i +'</a></li>');
+      $('.tab-item').eq((a+i)-1).find('.check-item input').each(function(){
+        $(this).attr('name', 'feature[kid-'+ i +'][]')
+      })
+    }
+
+    $(".tabs").lightTabs();
+  }
+
+  $('.check-item input').change(function(){
+    change_price()
+    var val = $(this).val();
+    var prop = $(this).prop('checked');
+    var apply = $('[name="apply-to-all"]').prop('checked');
+    if (apply) {
+      $('.tab-content-features [value="'+ val +'"]' ).prop('checked', prop);
+    }
+  })
 
 
   /**
@@ -83,7 +98,7 @@ jQuery(document).ready(function ($) {
   $('.box-form').submit(function(e){
     e.preventDefault();
     var data = $(this).serialize();
-
+    console.log(data)
     $.ajax({
       url: '/wp-admin/admin-ajax.php',
       data: data,
@@ -162,6 +177,9 @@ jQuery(document).ready(function ($) {
         qty: qty
       },
       success: function (data) {
+
+        console.log(data)
+
         if (data.msg) {
           alert(data.msg)
         }
@@ -171,7 +189,7 @@ jQuery(document).ready(function ($) {
         }
 
         $( document.body ).trigger( 'wc_fragment_refresh' );
-        console.log(data)
+
 
         setTimeout(function(){
           select_current_user()
@@ -248,8 +266,9 @@ jQuery(document).ready(function ($) {
   $(document).on('click', '.complete-order', function (e) {
     e.preventDefault();
     var valid = $(this).attr('data-valid');
+    var url = $(this).attr('href');
     if (valid == 'valid') {
-
+      location.href = url
     } else {
       alert( $(this).attr('data-msg'))
     }
@@ -303,5 +322,33 @@ jQuery(document).ready(function ($) {
 
   })
 
-  //name="apply-to-all"
+
+  /**
+   * apply_coupon
+   */
+
+  $(document).on('click', '.apply_coupon_checkout', function (e) {
+
+    e.preventDefault()
+
+    var coupon = $('#code').val();
+    $.ajax({
+      type: 'POST',
+      url: wc_add_to_cart_params.ajax_url,
+      data: {
+        action: 'apply_coupon',
+        coupon: coupon,
+      },
+      success: function (data) {
+        console.log(data)
+        $(document.body).trigger('update_checkout');
+
+      },
+    });
+
+
+
+  });
+
+
 })

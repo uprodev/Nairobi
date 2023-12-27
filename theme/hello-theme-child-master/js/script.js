@@ -149,6 +149,54 @@ jQuery(document).ready(function ($) {
     autoClose: true,
   });
 
+
+  //mask code
+  $('.code').mask("00000", {placeholder: "00000"});
+
+  //mask phone
+  $('.tel').mask("(000) 000-000", {placeholder: "(000) 000-000"});
+
+  //mask time
+  $('.time').mask("00-00", {placeholder: "00-00"});
+
+  //mask bank cart
+  $('.bank-cart').mask("0000 0000 0000 0000", {placeholder: "0000 0000 0000 0000"});
+
+  //mask bank date
+  $('.bank-date').mask("00/00", {placeholder: "MM/YY"});
+
+  //mask cvc
+  $('.cvc').mask("000", {placeholder: "000"});
+
+  //hide/show
+  $(document).on('click', '.title-product', function (e){
+    e.preventDefault();
+    $(this).toggleClass('is-active');
+    if($(this).hasClass('is-active')){
+      $(this).siblings('.wrap').slideDown();
+    }else{
+      $(this).siblings('.wrap').slideUp();
+    }
+  });
+
+  //delete product
+  $(document).on('click', '.delete-product a', function (e) {
+    e.preventDefault();
+    $(this).closest('.item-product').hide();
+  });
+
+  //hide/show
+  $(document).on('click', '.title-user', function (e){
+    e.preventDefault();
+    $(this).toggleClass('is-active');
+    if($(this).hasClass('is-active')){
+      $(this).siblings('.wrap-user').slideDown();
+    }else{
+      $(this).siblings('.wrap-user').slideUp();
+    }
+  });
+
+
   //open menu
   $(document).on('click', '.mob-btn-filter a', function (e) {
     e.preventDefault();

@@ -8,7 +8,8 @@ $actions = [
     'filter',
     'qty_cart',
     'login_1',
-    'login_2'
+    'login_2',
+    'apply_coupon',
 
 
 ];
@@ -26,64 +27,48 @@ foreach ($actions as $action) {
  */
 function add_to_cart()
 {
-    WC()->cart->empty_cart();
+
     $product_id = (int)$_POST['product_id'] ? (int)$_POST['product_id'] : (int)$_POST['product'];
     $count = (int)$_POST['count_kids'] + (int)$_POST['count_adults'];
     $features = $_POST['feature'];
-   // $features = array_slice($features, 0, $count);
 
-    if ($_POST['meta']) {
-        $features = $_POST['meta'];
-        $count = $_POST['qty'] ?  $_POST['qty'] : 1;
-    }
-
-
-    $person_cart_qty = [];
-    foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-        if (!$cart_item['meta'])
-            continue;
-        $person_cart_qty[$cart_item['meta']] += $cart_item['quantity'] ;
-
-    }
-    foreach ($person_cart_qty as $key=>$qty) {
-
-        if ($qty+$count > 9 && $features == $key)
-            $msg = __('You have reached max 9 meals for that person', 'nairobi');
-    }
-
-
-
-
+    //boxes
     if ($_POST['count_kids'] || $_POST['count_adults']) {
-        for ($i=1; $i<= $_POST['count_adults'] ; $i++ ) {
-            $key =  'person';
-            $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
-        }
+        WC()->cart->empty_cart();
+        WC()->session->set('adults', $_POST['count_adults']);
+        WC()->session->set('kids', $_POST['count_kids']);
+        $persons = get_persons();
 
-        for ($i=1; $i<=$_POST['count_kids']; $i++ ) {
-            $key =   'kid' ;
-            $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
-        }
-
-        $l = 1;
         foreach ($persons as $key => $person) {
+            $feature = $features[$key];
+            WC()->cart->add_to_cart($product_id, 1, '','', ['meta' => $key, 'features' => $feature]);
 
-            $added = WC()->cart->add_to_cart($product_id, 1, '','', ['meta' => $person, 'features' => $features[$l]]);
-            $l++;
         }
         $url = get_permalink(810);
-    } else {
-        if (!$msg)
-            $added = WC()->cart->add_to_cart($product_id, $count, '','', ['meta' => $features]);
-
     }
+    //meals
+    else {
+        //validation max
+        $person_cart_qty = [];
+        foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+            if (!$cart_item['meta'])
+                continue;
+            $person_cart_qty[$cart_item['meta']] += $cart_item['quantity'] ;
 
+        }
+        foreach ($person_cart_qty as $key=>$qty) {
+            if ($qty+$count > 9 && $features == $key)
+                $msg = __('You have reached max 9 meals for that person', 'nairobi');
+        }
 
+        if (!$msg)
+            $added = WC()->cart->add_to_cart($product_id, $_POST['qty'], '','', ['meta' => $_POST['meta']]);
+    }
 
     wp_send_json(
         [
             'count' => $_POST['feature'],
-            'd' => $person_cart_qty,
+            'd' => $test,
             'msg' => $msg,
             'url' => $url
         ]
@@ -192,7 +177,7 @@ function login_1() {
 function login_2() {
     $url = get_permalink(578);
     WC()->customer->set_billing_address_1($_POST['street']);
-    WC()->customer->set_billing_city($_POST['ville']);
+    WC()->customer->set_billing_state($_POST['billing_state']);
     WC()->customer->set_billing_city($_POST['ville']);
     WC()->customer->set_billing_postcode($_POST['code']);
     WC()->session->set('date', $_POST['date']);
@@ -204,4 +189,25 @@ function login_2() {
         'msg' => $msg
     ]);
 
+}
+
+/**
+ * apply_coupon
+ *
+ * @return void
+ */
+
+function apply_coupon()
+{
+    $coupon = $_POST['coupon'];
+
+    WC()->cart->apply_coupon( $coupon );
+
+
+    wp_send_json(
+        [
+            'coupon' => $coupon,
+        ]
+    );
+    die();
 }

@@ -4,19 +4,9 @@ Template Name: Catalog
 */
 
 
-$adults = WC()->session->get('adults');
-$kids = WC()->session->get('kids');
 
-for ($i=1; $i<=$adults ; $i++ ) {
-    $key =  'person';
-    $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
-}
 
-for ($i=1; $i<=$kids; $i++ ) {
-    $key =   'kid' ;
-    $persons[$key.'-'. $i] = __(ucfirst($key), 'nairobi'). ' '. $i;
-}
-
+$persons = get_persons();
 ?>
 
 <?php get_header(); ?>

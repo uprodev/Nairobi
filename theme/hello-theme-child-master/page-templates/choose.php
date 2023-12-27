@@ -127,7 +127,7 @@ $min_meals = 4;
                                     if ($features)
                                         foreach ($features as $feature) { ?>
                                             <div class="check-item">
-                                                <input type="checkbox" name="feature[<?= $i ?>][]" id="feature-<?= $feature->term_id ?>-<?= $i ?>" value="<?= $feature->name ?>">
+                                                <input type="checkbox" name="feature[<?= $i ?>][]" id="feature-<?= $feature->term_id ?>-<?= $i ?>" value="<?= $feature->term_id ?>">
                                                 <label for="feature-<?= $feature->term_id ?>-<?= $i ?>" class="round-check">
                                                     <img src="<?= get_field('icon', $feature)['url'] ?>" alt="">
                                                     <span class="text"><?= $feature->name ?> </span>

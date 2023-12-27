@@ -14,7 +14,7 @@
 	<?php wp_body_open(); ?>
 	<header>
        <?php
-       if (is_page_template('page-templates/login.php') || is_page_template('page-templates/choose.php') || is_page_template('page-templates/delivery.php'))
+       if (is_page_template('page-templates/login.php') || is_page_template('page-templates/choose.php') || is_page_template('page-templates/delivery.php') || is_checkout()  )
            $type = 'steps';
        else
            $type = 'default';

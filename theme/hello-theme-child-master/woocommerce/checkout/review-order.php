@@ -16,97 +16,125 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+$person_cart_qty = $person_cart_totals = $person_cart_valid = $person_cart = [];
+
+$persons = get_persons();
+
+foreach ($persons as $key=>$person) {
+    $person_cart_qty[$key] = 0;
+    foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+        if ($cart_item['meta'] != $key)
+            continue;
+        $person_cart_qty[$key] += $cart_item['quantity'] ;
+        $person_cart[$key][] = $cart_item;
+       // $person_cart2[$cart_item['meta']] = $cart_item['features'];
+        $person_cart_totals[$key] += $cart_item['line_subtotal'] ;
+
+    }
+}
+
+
+
 ?>
-<table class="shop_table woocommerce-checkout-review-order-table">
-	<thead>
-		<tr>
-			<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
-			<th class="product-total"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php
-		do_action( 'woocommerce_review_order_before_cart_contents' );
+<div class="shop_table woocommerce-checkout-review-order-table">
+<div class="item-aside item-aside-mob">
+    <div class="title title-product">Récapitulatif de la commande</div>
+    <p class="h6"><?= WC()->cart->get_cart_contents_count() ?> éléments dans le panier</p>
+    <div class="wrap">
 
-		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-            $other_data = apply_filters( 'woocommerce_get_item_data', array(), $cart_item );
+        <?php
+        foreach ($person_cart as $key=>$person) {  ?>
+            <div class="user-item">
+                <div class="title-user"><?= $persons[$key] ?></div>
+                <div class="wrap-user">
 
-           print_r($cart_item['meta']);
-			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-				?>
-				<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
-					<td class="product-name">
-						<?php echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ) . '&nbsp;'; ?>
-						<?php echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf( '&times;&nbsp;%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<?php echo wc_get_formatted_cart_item_data( $cart_item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</td>
-					<td class="product-total">
-						<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</td>
-				</tr>
-				<?php
-			}
-		}
+                    <?php
+                    foreach ($person as $cart_item) {
+                        $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+                        $other_data = apply_filters( 'woocommerce_get_item_data', array(), $cart_item );
+                        $thumbnail         = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+                        $product_price     = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+                        $product_name      = apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key );
 
-		do_action( 'woocommerce_review_order_after_cart_contents' );
-		?>
-	</tbody>
-	<tfoot>
 
-		<tr class="cart-subtotal">
-			<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
-			<td><?php wc_cart_totals_subtotal_html(); ?></td>
-		</tr>
+                        ?>
+                        <div class="product-info">
 
-		<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
-			<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-				<th><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
-				<td><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
-			</tr>
-		<?php endforeach; ?>
+                            <div class="item-product">
+                                <figure>
+                                    <?= $thumbnail ?>
+                                </figure>
+                                <div class="text">
+                                    <p><?= $product_name ?> x <?= $cart_item['quantity'] ?></p>
+                                    <div class="cost-wrap">
+                                        <p class="price"><?= $product_price ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
 
-		<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
+                            <?php
+                            $features = $cart_item['features'];
+                            if ($features) { ?>
 
-			<?php do_action( 'woocommerce_review_order_before_shipping' ); ?>
+                                <ul>
+                                    <?php
+                                    foreach ($features as $feature) {
+                                        $feature = get_term($feature); ?>
 
-			<?php wc_cart_totals_shipping_html(); ?>
+                                        <li>
+                                            <img src="<?= get_field('icon', $feature)['url'] ?>" alt="">
+                                            <span class="text"><?= $feature->name ?> </span>
+                                        </li>
 
-			<?php do_action( 'woocommerce_review_order_after_shipping' ); ?>
+                                    <?php } ?>
+                                </ul>
 
-		<?php endif; ?>
+                            <?php } ?>
 
-		<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
-			<tr class="fee">
-				<th><?php echo esc_html( $fee->name ); ?></th>
-				<td><?php wc_cart_totals_fee_html( $fee ); ?></td>
-			</tr>
-		<?php endforeach; ?>
 
-		<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
-			<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
-				<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited ?>
-					<tr class="tax-rate tax-rate-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-						<th><?php echo esc_html( $tax->label ); ?></th>
-						<td><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
-					</tr>
-				<?php endforeach; ?>
-			<?php else : ?>
-				<tr class="tax-total">
-					<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
-					<td><?php wc_cart_totals_taxes_total_html(); ?></td>
-				</tr>
-			<?php endif; ?>
-		<?php endif; ?>
+                        </div>
+                    <?php } ?>
 
-		<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
+                </div>
+            </div>
+        <?php } ?>
 
-		<tr class="order-total">
-			<th><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
-			<td><?php wc_cart_totals_order_total_html(); ?></td>
-		</tr>
 
-		<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
+    </div>
 
-	</tfoot>
-</table>
+</div>
+
+<?php if ( wc_coupons_enabled() ) { ?>
+    <div class="item-aside">
+        <div class="title title-product ">Code promo</div>
+        <div class="wrap form-wrap" >
+            <?php do_action( 'woocommerce_cart_coupon' ); ?>
+            <div class="input-wrap input-wrap-login mb-0">
+                <label for="code">Entrez votre code promo</label>
+                <input type="text"   name="code" id="code" placeholder="Gift card or discount code">
+                <br>
+                <a    value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>" class="btn-default apply_coupon_checkout">APPLY</a>
+
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+
+<div class="total-block">
+    <div class="total-wrap">
+
+        <?php wc_get_template('cart/cart-totals.php'); ?>
+
+    </div>
+
+    <div class="btn-wrap">
+        <button type="submit" class="btn-default">Payer <?php wc_cart_totals_order_total_html(); ?></button>
+    </div>
+</div>
+
+
+</div>
+
