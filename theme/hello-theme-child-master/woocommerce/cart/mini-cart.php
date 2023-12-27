@@ -121,12 +121,12 @@ do_action( 'woocommerce_before_mini_cart' );
                                     );
                                     ?>
                                 </p>
-                                <div class="input-number ">
+                                <div class="input-number cart-qty ">
                                     <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
 
                                         <input type="text"  class="form-control" name="cart[<?= $cart_item_key ?>][qty]" value="<?=  $cart_item['quantity'] ?>"
                                            aria-label="Product quantity"  min="" max="" step="1" placeholder="" inputmode="numeric" autocomplete="off">
-                                    <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
+                                        <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                                 </div>
                             </div>
                         </div>

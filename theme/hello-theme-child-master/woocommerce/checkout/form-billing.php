@@ -70,7 +70,7 @@ defined( 'ABSPATH' ) || exit;
     </div>
     <div class="input-wrap input-wrap-login input-wrap-50">
         <label for="billing_phone">Numéro de téléphone</label>
-        <input type="text" id="billing_phone" name="billing_phone" placeholder="(000) 000-000" class="tel" value="<?= $checkout->get_value( 'billing_phone' ) ?>">
+        <input type="text" id="billing_phone" name="billing_phone" placeholder="(000) 000-0000" class="tel" value="<?= $checkout->get_value( 'billing_phone' ) ?>">
     </div>
 </div>
 <div class="item-form">
@@ -80,11 +80,20 @@ defined( 'ABSPATH' ) || exit;
         <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-17-1.svg" alt="">
         <input type="text" id="date" name="date" class="date1" placeholder="01/12/23" value="<?= WC()->session->get('date'); ?>">
     </div>
-    <div class="input-wrap input-wrap-login input-wrap-50 input-img">
+
+    <div class="input-wrap input-wrap-login input-wrap-50 select-block">
         <label for="time">Heure</label>
-        <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-17-2.svg" alt="">
-        <input type="text" id="time" name="time" placeholder="00-00" class="time" value="<?= WC()->session->get('time'); ?>">
+
+        <select id="region" name="billing_state">
+            <option <?php selected( WC()->session->get('time') , '9-12h') ?> value="9-12h">9-12h</option>
+            <option <?php selected( WC()->session->get('time') , '13-15h') ?> value="13-15h">13-15h</option>
+            <option <?php selected( WC()->session->get('time') , '18-21h') ?> value="18-21h">18-21h</option>
+
+
+        </select>
+
     </div>
+
 </div>
 
 <input type="hidden" name="billing_country" value="FR">

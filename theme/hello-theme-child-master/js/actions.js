@@ -123,7 +123,7 @@ jQuery(document).ready(function ($) {
    * filter
    */
 
-  $('.filter-form [name]').change(function(){
+  $('.filter-form .filter-line [name]').change(function(){
     $('.filter-form').submit()
   })
   $('.filter-form').submit(function(e){
@@ -146,6 +146,12 @@ jQuery(document).ready(function ($) {
           console.log(data)
 
           $('.filter_output').html(data.html)
+
+          $(".fancybox").fancybox({
+            touch:false,
+            autoFocus:false,
+          });
+
         }
       }
     });
@@ -178,7 +184,7 @@ jQuery(document).ready(function ($) {
       },
       success: function (data) {
 
-        console.log(data)
+        //console.log(data)
 
         if (data.msg) {
           alert(data.msg)
@@ -190,9 +196,11 @@ jQuery(document).ready(function ($) {
 
         $( document.body ).trigger( 'wc_fragment_refresh' );
 
-
         setTimeout(function(){
           select_current_user()
+          if ($(window).width() < 767) {
+            $('.catalog-menu .menu-right').addClass('is-active');
+          }
         }, 500)
       },
     });
@@ -203,7 +211,7 @@ jQuery(document).ready(function ($) {
    * cart
    */
 
-  $(document).on('change', '.mini-cart input', function () {
+  $(document).on('change', '.cart-qty input', function () {
     var item_hash = $(this)
       .attr('name')
       .replace(/cart\[([\w]+)\]\[qty\]/g, '$1');

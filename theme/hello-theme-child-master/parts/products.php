@@ -11,7 +11,7 @@ $terms = get_terms( [
 
 <?php if ($terms): ?>
     <?php foreach ($terms as $term):
-        if ($_POST['cat']) {
+        if ($_POST['cat'] && $_POST['cat'] !== 'all') {
             if ($term->term_id != (int)$_POST['cat'])
                 continue;
         }

@@ -147,3 +147,17 @@ function get_persons() {
 
     return $persons;
 }
+
+
+add_action('template_redirect', function(){
+    if (is_shop() || is_product()) {
+        wp_redirect(home_url());
+    }
+
+    if (is_page_template('page-templates/login.php') ||   is_page_template('page-templates/delivery.php')     ) {
+        $adults = WC()->session->get('adults');
+        $kids = WC()->session->get('kids');
+        if (!$adults || !$kids)
+            wp_redirect(home_url());
+    }
+});

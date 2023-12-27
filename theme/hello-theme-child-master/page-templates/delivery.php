@@ -60,10 +60,17 @@ Template Name: Delivery
                         <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-17-1.svg" alt="">
                         <input type="text" id="date" name="date" class="date1" placeholder="01/12/23">
                     </div>
-                    <div class="input-wrap input-wrap-login input-wrap-50 input-img">
+                    <div class="input-wrap input-wrap-login input-wrap-50 select-block">
                         <label for="time">Heure</label>
-                        <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-17-2.svg" alt="">
-                        <input type="text" id="time" name="time" placeholder="00-00" class="time">
+
+                        <select id="region" name="billing_state">
+                            <option value="9-12h">9-12h</option>
+                            <option value="13-15h">13-15h</option>
+                            <option value="18-21h">18-21h</option>
+
+
+                        </select>
+
                     </div>
                     <div class="input-wrap-submit">
                         <button type="submit" class="btn-default">Continue</button>

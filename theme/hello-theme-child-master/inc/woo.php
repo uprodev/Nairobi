@@ -112,3 +112,42 @@ function my_custom_checkout_field_display_admin_order_meta($order){
 
 
 }
+
+
+// WooCommerce Rename Checkout Fields
+add_filter( 'woocommerce_checkout_fields' , 'custom_rename_wc_checkout_fields' );
+
+// Change placeholder and label text
+function custom_rename_wc_checkout_fields( $fields ) {
+
+    $fields['billing']['billing_first_name']['label'] = __('Prénom','nairobi');
+    $fields['billing']['billing_last_name']['label'] = __('Nom','nairobi');
+    $fields['billing']['billing_email']['label'] = __('Adresse mail','nairobi');
+    $fields['billing']['billing_address_1']['label'] = __('Rue et numéro','nairobi');
+    $fields['billing']['billing_city']['label'] = __('Ville','nairobi');
+    $fields['billing']['billing_postcode']['label'] = __('Code postal','nairobi');
+    $fields['billing']['billing_postcode']['label'] = __('Code postal','nairobi');
+    $fields['billing']['billing_phone']['label'] = __('Numéro de téléphone','nairobi');
+
+    return $fields;
+}
+
+add_filter( 'woocommerce_add_error', 'woocommerceAddError' );
+
+/**
+ * Remove billing from the validation message
+ * @see wc_add_notice
+ *
+ * @param $error
+ * @return string|string[]
+ */
+function woocommerceAddError ( $error )
+{
+    if ( strpos( $error, 'Billing ' ) !== false ) {
+        $error = str_replace( "Billing ", "", $error );
+    }
+    if ( strpos( $error, 'Facturering ' ) !== false ) {
+        $error = str_replace( "Facturering ", "", $error );
+    }
+    return $error;
+}

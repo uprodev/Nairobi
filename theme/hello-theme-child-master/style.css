@@ -86,3 +86,8 @@ footer .footer-form button:hover{
   width: auto;
 
 }
+
+.input-wrap.input-wrap-login.mb-0 {
+  display: flex;
+  column-gap: 7px;
+}

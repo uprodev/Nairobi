@@ -40,9 +40,9 @@ foreach ($persons as $key=>$person) {
 <div class="shop_table woocommerce-checkout-review-order-table">
 <div class="item-aside item-aside-mob">
     <div class="title title-product">Récapitulatif de la commande</div>
-    <p class="h6"><?= WC()->cart->get_cart_contents_count() ?> éléments dans le panier</p>
-    <div class="wrap">
 
+    <div class="wrap">
+        <p class="h6"><?= WC()->cart->get_cart_contents_count() ?> éléments dans le panier</p>
         <?php
         foreach ($person_cart as $key=>$person) {  ?>
             <div class="user-item">
@@ -59,7 +59,7 @@ foreach ($persons as $key=>$person) {
 
 
                         ?>
-                        <div class="product-info">
+                        <div class="product-info cart-qty">
 
                             <div class="item-product">
                                 <figure>
@@ -67,6 +67,15 @@ foreach ($persons as $key=>$person) {
                                 </figure>
                                 <div class="text">
                                     <p><?= $product_name ?> x <?= $cart_item['quantity'] ?></p>
+
+<!--                                    <div class="input-number ">-->
+<!--                                        <div class="btn-count btn-count-plus"><img src="--><?//= get_stylesheet_directory_uri() ?><!--/img/icon-4-2.svg" alt=""></div>-->
+<!---->
+<!--                                        <input type="text"  class="form-control" name="cart[--><?//= $cart_item_key ?><!--][qty]" value="--><?//=  $cart_item['quantity'] ?><!--"-->
+<!--                                               aria-label="Product quantity"  min="" max="" step="1" placeholder="" inputmode="numeric" autocomplete="off">-->
+<!--                                        <div class="btn-count btn-count-minus"><img src="--><?//= get_stylesheet_directory_uri() ?><!--/img/icon-4-1.svg" alt=""></div>-->
+<!--                                    </div>-->
+
                                     <div class="cost-wrap">
                                         <p class="price"><?= $product_price ?></p>
                                     </div>

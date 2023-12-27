@@ -9,9 +9,10 @@ jQuery(document).ready(function ($) {
     return t = t < max ? t : max ,  e.val(t), e.change(), !1
   }),
     $(document).on('click', '.btn-count-minus', function(e){
-
-    var e = $(this).parent().find("input"), t = parseInt(e.val()) - 1;
-    return t = t < 0 ? 1 : t, e.val(t), e.change(), !1
+      var e = $(this).parent().find("input")
+      var min = e.attr('min') ? parseInt(e.attr('min')) : 1,t = parseInt(e.val()) - 1
+      return t = t > min ? t : min ,  e.val(t), e.change(), !1
+    //return t = t < 0 ? 1 : t, e.val(t), e.change(), !1
   })
 
   //select
@@ -154,7 +155,7 @@ jQuery(document).ready(function ($) {
   $('.code').mask("00000", {placeholder: "00000"});
 
   //mask phone
-  $('.tel').mask("(000) 000-000", {placeholder: "(000) 000-000"});
+  $('.tel').mask("(000) 000-0000", {placeholder: "(000) 000-0000"});
 
   //mask time
   $('.time').mask("00-00", {placeholder: "00-00"});

@@ -35,7 +35,7 @@ $persons = get_persons();
                                     <div class="swiper filter-slider filter-slider-1">
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
-                                                <input type="checkbox" id="filter-1-1" value="" name="cat" checked>
+                                                <input type="radio" id="filter-1-1" value="all" name="cat" checked>
                                                 <label for="filter-1-1">All</label>
                                             </div>
 
@@ -101,7 +101,7 @@ $persons = get_persons();
                             <?php endif ?>
 
                         </div>
-                        <div class="right">
+                        <div class="right" id="sort">
                             <p><?php _e('Sort by', 'Nairobi') ?>:</p>
                             <div class="select-block ">
 
@@ -123,8 +123,8 @@ $persons = get_persons();
                         </div>
                     </div>
                     <div class="mob-btn">
-                        <a href="#filter" class="btn"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-13.svg" alt=""><?php _e('Filters', 'Nairobi') ?></a>
-                        <a href="#sort" class="btn-img"><?php _e('Sort by', 'Nairobi') ?>: <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-14.svg" alt=""></a>
+                        <a href="#filter" class="btn fancybox"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-13.svg" alt=""><?php _e('Filters', 'Nairobi') ?></a>
+                        <a href="#sort" class="btn-img fancybox"><?php _e('Sort by', 'Nairobi') ?>: <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-14.svg" alt=""></a>
                     </div>
 
 

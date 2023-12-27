@@ -30,7 +30,7 @@ Template Name: Login
                         <button type="submit" class="btn-default">Continue</button>
                     </div>
                     <div class="link-wrap">
-                        <a href="#">Continuer en tant qu’invité</a>
+                        <a href="<?php the_permalink(578) ?>">Continuer en tant qu’invité</a>
                     </div>
                     <input type="hidden" name="action" value="login_1">
                     <div class="result"></div>
