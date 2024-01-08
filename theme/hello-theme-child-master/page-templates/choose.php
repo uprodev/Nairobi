@@ -70,7 +70,7 @@ $min_meals = 4;
                             <p>Adults </p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                                <input type="text" name="count_adults" max="<?= $max_adults ?>" value="2" class="form-control"/>
+                                <input type="text" name="count_adults" max="<?= $max_adults ?>"  min="1" value="2" class="form-control"/>
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@ $min_meals = 4;
                             <p>Kids</p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                                <input type="text" name="count_kids" max="<?= $max_kids ?>" value="1" class="form-control"/>
+                                <input type="text" name="count_kids" max="<?= $max_kids ?>" min="0" value="1" class="form-control"/>
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>

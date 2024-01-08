@@ -40,7 +40,7 @@ function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_script('air-datepicker', get_stylesheet_directory_uri() . '/js/air-datepicker.js', array(), false, true);
 	wp_enqueue_script('mask', get_stylesheet_directory_uri() . '/js/jquery.mask.js', array(), false, true);
 	wp_enqueue_script('my-script', get_stylesheet_directory_uri() . '/js/script.js', array(), false, true);
-	wp_enqueue_script('actions', get_stylesheet_directory_uri() . '/js/actions.js', array(), false, true);
+	wp_enqueue_script('actions', get_stylesheet_directory_uri() . '/js/actions.js', array(), false, 2);
 
 
     if (!is_front_page()) {

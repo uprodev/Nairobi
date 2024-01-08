@@ -264,7 +264,7 @@ jQuery(document).ready(function ($) {
     $('.person-item-wrap').hide()
     $('.' + val).show()
 
-    console.log(val)
+    $('.filter_output input').val(1)
   }
 
   /**

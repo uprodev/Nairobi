@@ -55,7 +55,7 @@
             <p class="cost">€ <?= $product->get_price() ?></p>
             <div class="input-number ">
                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                <input type="text" name="count" value="1" class="form-control"/>
+                <input type="text" name="count" value="1" max="9" min="1" class="form-control"/>
                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
             </div>
         </div>

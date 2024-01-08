@@ -31,13 +31,15 @@ function add_to_cart()
     $product_id = (int)$_POST['product_id'] ? (int)$_POST['product_id'] : (int)$_POST['product'];
     $count = (int)$_POST['count_kids'] + (int)$_POST['count_adults'];
     $features = $_POST['feature'];
+    $persons = get_persons();
+    $qty =  $_POST['qty'];
 
     //boxes
     if ($_POST['count_kids'] || $_POST['count_adults']) {
         WC()->cart->empty_cart();
         WC()->session->set('adults', $_POST['count_adults']);
         WC()->session->set('kids', $_POST['count_kids']);
-        $persons = get_persons();
+
 
         foreach ($persons as $key => $person) {
             $feature = $features[$key];
@@ -50,15 +52,17 @@ function add_to_cart()
     else {
         //validation max
         $person_cart_qty = [];
-        foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-            if (!$cart_item['meta'])
-                continue;
-            $person_cart_qty[$cart_item['meta']] += $cart_item['quantity'] ;
+        foreach ($persons as $key => $person) {
+            foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+                if ($key !== $cart_item['meta'])
+                    continue;
+                $person_cart_qty[$cart_item['meta']] += $cart_item['quantity'] ;
 
+            }
         }
-        foreach ($person_cart_qty as $key=>$qty) {
-            if ($qty+$count > 9 && $features == $key)
-                $msg = __('You have reached max 9 meals for that person', 'nairobi');
+
+        if ($qty+$person_cart_qty[$_POST['meta']] > 9) {
+            $msg = __('You have reached max 9 meals for that person', 'nairobi');
         }
 
         if (!$msg)
