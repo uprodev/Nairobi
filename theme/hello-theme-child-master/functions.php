@@ -24,6 +24,7 @@ function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_style('my-styles', get_stylesheet_directory_uri() . '/css/styles.css');
 	wp_enqueue_style('air-datepicker', get_stylesheet_directory_uri() . '/css/air-datepicker.css');
 	wp_enqueue_style('my-responsive', get_stylesheet_directory_uri() . '/css/responsive.css');
+	wp_enqueue_style('intlTelInput',  'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css');
 	wp_enqueue_style(
 		'hello-elementor-child-style',
 		get_stylesheet_directory_uri() . '/style.css',
@@ -40,7 +41,10 @@ function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_script('air-datepicker', get_stylesheet_directory_uri() . '/js/air-datepicker.js', array(), false, true);
 	wp_enqueue_script('mask', get_stylesheet_directory_uri() . '/js/jquery.mask.js', array(), false, true);
 	wp_enqueue_script('my-script', get_stylesheet_directory_uri() . '/js/script.js', array(), false, true);
-	wp_enqueue_script('actions', get_stylesheet_directory_uri() . '/js/actions.js', array(), false, 2);
+    wp_enqueue_script('intlTelInput',  'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput-jquery.min.js', array(), false, 2);
+    wp_enqueue_script('intlTelInpututils',  'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js', array(), false, 2);
+    wp_enqueue_script('actions', get_stylesheet_directory_uri() . '/js/actions.js', array(), false, 2);
+
 
 
     if (!is_front_page()) {
@@ -154,10 +158,13 @@ add_action('template_redirect', function(){
         wp_redirect(home_url());
     }
 
-    if (is_page_template('page-templates/login.php') ||   is_page_template('page-templates/delivery.php')     ) {
+    if (
+       // is_page_template('page-templates/login.php') ||
+        is_page_template('page-templates/delivery.php')     ) {
         $adults = WC()->session->get('adults');
         $kids = WC()->session->get('kids');
-        if (!$adults || !$kids)
+        if (!$adults && !$kids)
             wp_redirect(home_url());
     }
+
 });

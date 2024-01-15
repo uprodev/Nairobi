@@ -44,6 +44,10 @@ defined( 'ABSPATH' ) || exit;
         <label for="billing_address_1">Rue et numéro</label>
         <input type="text" id="billing_address_1" name="billing_address_1" value="<?= $checkout->get_value( 'billing_address_1' ) ?>">
     </div>
+    <div class="input-wrap input-wrap-login">
+        <label for="billing_address_2">Numéro de maison, appartement</label>
+        <input type="text" id="billing_address_2" name="billing_address_2" value="<?= $checkout->get_value( 'billing_address_2' ) ?>">
+    </div>
     <div class="input-wrap input-wrap-login input-wrap-50 select-block">
         <label class="form-label" for="region">State/Province</label>
 
@@ -71,6 +75,8 @@ defined( 'ABSPATH' ) || exit;
     <div class="input-wrap input-wrap-login input-wrap-50">
         <label for="billing_phone">Numéro de téléphone</label>
         <input type="text" id="billing_phone" name="billing_phone" placeholder="(000) 000-0000" class="tel" value="<?= $checkout->get_value( 'billing_phone' ) ?>">
+        <input type="hidden" name="billing_code">
+
     </div>
 </div>
 <div class="item-form">
@@ -96,7 +102,7 @@ defined( 'ABSPATH' ) || exit;
 
 </div>
 
-<input type="hidden" name="billing_country" value="FR">
+<input type="hidden" name="billing_country" value="BE">
 
 
 

@@ -151,11 +151,83 @@ jQuery(document).ready(function ($) {
   });
 
 
+  if ($('.tel').length) {
+
+    // const input = document.querySelector(".tel");
+    // window.intlTelInput(input, {
+    //   utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+    // });
+
+
+    function validate() {
+
+      var number = $(".tel").intlTelInput('getNumber');
+      iso = $(".tel").intlTelInput('getSelectedCountryData').iso2;
+
+      var exampleNumber = intlTelInputUtils.getExampleNumber(iso, 0, 0);
+      if (number == '')
+        number = exampleNumber;
+
+      var formattedNumber = intlTelInputUtils.formatNumber(number, iso, intlTelInputUtils.numberFormat.NATIONAL);
+      var isValidNumber = intlTelInputUtils.isValidNumber(number, iso);
+      var validationError = intlTelInputUtils.getValidationError(number, iso);
+
+      console.log(number);
+      console.log(formattedNumber);
+      console.log(intlTelInputUtils.formatNumber(number, iso, intlTelInputUtils.numberFormat.INTERNATIONAL));
+      console.log(intlTelInputUtils.formatNumber(number, iso, intlTelInputUtils.numberFormat.E164));
+      console.log(intlTelInputUtils.formatNumber(number, iso, intlTelInputUtils.numberFormat.RFC3966));
+      console.log(isValidNumber);
+      console.log(validationError);
+
+    }
+
+
+//var input = document.querySelector("#phone");
+
+    $(".tel").intlTelInput({
+
+      //hiddenInput: "full_number",
+      initialCountry: "be",
+      separateDialCode: true,
+
+    });
+
+    setTimeout(function(){
+      $('.tel').trigger('countrychange');
+
+    }, 400)
+
+    $('.tel').on('countrychange', function (e) {
+
+    //  $(this).val('');
+
+      var selectedCountry = $(this).intlTelInput('getSelectedCountryData');
+      var dialCode = selectedCountry.dialCode;
+      var maskNumber = intlTelInputUtils.getExampleNumber(selectedCountry.iso2, 0, 0);
+   //   console.log("placeholder > " + maskNumber);
+      maskNumber = intlTelInputUtils.formatNumber(maskNumber, selectedCountry.iso2, 2);
+    //  console.log("placeholder > " + maskNumber);
+      maskNumber = maskNumber.replace('+' + dialCode + ' ', '');
+      console.log(selectedCountry);
+      mask = maskNumber.replace(/[0-9+]/ig, '0');
+      //maskPlaceHolder = mask.replace(/[0-9+]/ig, '_');
+
+      $('.tel').mask(mask, { placeholder: maskNumber });
+
+      $('[name="billing_code"]').val(dialCode)
+    });
+
+
+
+
+  }
+
   //mask code
   $('.code').mask("00000", {placeholder: "00000"});
 
   //mask phone
-  $('.tel').mask("(000) 000-0000", {placeholder: "(000) 000-0000"});
+ // $('.tel').mask("(00) 000-000-000", {placeholder: "(00) 000-000-000"});
 
   //mask time
   $('.time').mask("00-00", {placeholder: "00-00"});

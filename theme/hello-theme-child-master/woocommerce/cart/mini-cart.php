@@ -27,6 +27,7 @@ $persons = get_persons();
 
 
 
+
 //qty
 $person_cart_qty = $person_cart_totals = $person_cart_valid = [];
 
@@ -146,8 +147,10 @@ do_action( 'woocommerce_before_mini_cart' );
         <div class="total-block">
             <div class="total-wrap">
                 <p class="sub-title sub-title-box">Totals </p>
-                <?php foreach ($persons as $key=>$person) { ?>
-                    <p class="info"><?= $person ?> - <?= $person_cart_qty[$key]?:0 ?>/<?= $meals ?> - <?= wc_price($person_cart_totals[$key]) ?></p>
+                <?php foreach ($persons as $key=>$person) {
+                    $red = $person_cart_qty[$key] < $meals ? 'red'  : '';
+                    ?>
+                    <p class="info <?= $red ?>"><?= $person ?> - <?= $person_cart_qty[$key]?:0 ?>/<?= $meals ?> - <?= wc_price($person_cart_totals[$key]) ?></p>
                 <?php } ?>
                 <ul>
                     <li>

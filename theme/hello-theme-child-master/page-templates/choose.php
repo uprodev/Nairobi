@@ -29,6 +29,7 @@ $min_meals = 4;
                             $boxes = new WP_Query([
                                 'post_type' => 'product',
                                 'product_cat' => 'boxes',
+                                'orderby' => 'menu_order'
 
                             ]);
 

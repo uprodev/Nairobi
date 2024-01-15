@@ -184,7 +184,7 @@ jQuery(document).ready(function ($) {
       },
       success: function (data) {
 
-        //console.log(data)
+        console.log(data)
 
         if (data.msg) {
           alert(data.msg)

@@ -28,15 +28,18 @@ foreach ($actions as $action) {
 function add_to_cart()
 {
 
+
     $product_id = (int)$_POST['product_id'] ? (int)$_POST['product_id'] : (int)$_POST['product'];
     $count = (int)$_POST['count_kids'] + (int)$_POST['count_adults'];
     $features = $_POST['feature'];
     $persons = get_persons();
     $qty =  $_POST['qty'];
-
+    WC()->session->get('meals');
+    $meals = WC()->session->get('meals');
     //boxes
     if ($_POST['count_kids'] || $_POST['count_adults']) {
         WC()->cart->empty_cart();
+        WC()->session->set_customer_session_cookie(true);
         WC()->session->set('adults', $_POST['count_adults']);
         WC()->session->set('kids', $_POST['count_kids']);
 
@@ -61,8 +64,8 @@ function add_to_cart()
             }
         }
 
-        if ($qty+$person_cart_qty[$_POST['meta']] > 9) {
-            $msg = __('You have reached max 9 meals for that person', 'nairobi');
+        if ($qty+$person_cart_qty[$_POST['meta']] > $meals) {
+            $msg = sprintf(__('You have reached max %s meals for that person', 'nairobi'), $meals);
         }
 
         if (!$msg)
@@ -113,6 +116,7 @@ function select_meals() {
     $features = $_POST['feature'];
     $features = array_slice($features, 0, $count);
     WC()->cart->empty_cart();
+    WC()->session->set_customer_session_cookie(true);
     WC()->session->set('adults', $_POST['count_adults']);
     WC()->session->set('kids', $_POST['count_kids']);
     WC()->session->set('meals', $_POST['count_meals']);
@@ -181,11 +185,14 @@ function login_1() {
 function login_2() {
     $url = get_permalink(578);
     WC()->customer->set_billing_address_1($_POST['street']);
+    WC()->customer->set_billing_address_2($_POST['home']);
     WC()->customer->set_billing_state($_POST['billing_state']);
     WC()->customer->set_billing_city($_POST['ville']);
+    WC()->customer->set_billing_phone($_POST['tel']);
     WC()->customer->set_billing_postcode($_POST['code']);
     WC()->session->set('date', $_POST['date']);
     WC()->session->set('time',$_POST['time']);
+    WC()->session->set('billing_code',$_POST['billing_code']);
 
     wp_send_json([
 

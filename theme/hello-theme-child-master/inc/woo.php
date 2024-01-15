@@ -98,6 +98,8 @@ function my_custom_checkout_field_update_order_meta( $order_id ) {
     if ( ! empty( $_POST['time'] ) )
         update_post_meta( $order_id, 'time', sanitize_text_field( $_POST['time'] ) );
 
+    if ( ! empty( $_POST['billing_code'] ) )
+        update_post_meta( $order_id, 'billing_code', sanitize_text_field( $_POST['billing_code'] ) );
 
 
 }
@@ -109,6 +111,7 @@ function my_custom_checkout_field_display_admin_order_meta($order){
 
     echo '<p><strong>Date:</strong> ' . get_post_meta($order->id, 'date', true) . '</p>';
     echo '<p><strong>Time:</strong> ' . get_post_meta($order->id, 'time', true) . '</p>';
+    echo '<p><strong>Tel code:</strong> ' . get_post_meta($order->id, 'billing_code', true) . '</p>';
 
 
 }
@@ -128,6 +131,7 @@ function custom_rename_wc_checkout_fields( $fields ) {
     $fields['billing']['billing_postcode']['label'] = __('Code postal','nairobi');
     $fields['billing']['billing_postcode']['label'] = __('Code postal','nairobi');
     $fields['billing']['billing_phone']['label'] = __('Numéro de téléphone','nairobi');
+    $fields['billing']['billing_address_2']['required'] = true;
 
     return $fields;
 }

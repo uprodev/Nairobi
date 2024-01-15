@@ -26,6 +26,11 @@ Template Name: Delivery
                         <label for="street">Rue et numéro</label>
                         <input type="text" id="street" name="street" >
                     </div>
+                    <div class="input-wrap input-wrap-login">
+                        <label for="home">Numéro de maison, appartement</label>
+                        <input type="text" id="home" name="home" >
+                    </div>
+
                     <div class="input-wrap input-wrap-login input-wrap-50 select-block">
                         <label class="form-label" for="region">State/Province</label>
                         <?php
@@ -52,6 +57,7 @@ Template Name: Delivery
                     <div class="input-wrap input-wrap-login input-wrap-50">
                         <label for="tel">Numéro de téléphone</label>
                         <input type="text" id="tel" name="tel" placeholder="(000) 000-000" class="tel">
+                        <input type="hidden" name="billing_code">
                     </div>
 
                     <div class="sub-title">Où et quand voulez-vous être livré ?</div>
