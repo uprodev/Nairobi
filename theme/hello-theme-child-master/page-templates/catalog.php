@@ -36,7 +36,7 @@ $persons = get_persons();
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
                                                 <input type="radio" id="filter-1-1" value="all" name="cat" checked>
-                                                <label for="filter-1-1">All</label>
+                                                <label for="filter-1-1"><?php _e('All', 'nairobi') ?></label>
                                             </div>
 
                                             <?php

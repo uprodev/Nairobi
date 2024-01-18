@@ -19,10 +19,10 @@ $min_meals = 4;
         <div class="content">
             <form action="#" class="form-default box-form">
                 <div class="left">
-                    <p class="title">1. Choose your preferences</p>
-                    <p>Your preferences help us show you the most relevant recipes first. </p>
+                    <p class="title"><?php _e('1. Choose your preferences', 'nairobi') ?></p>
+                    <p><?php _e('Your preferences help us show you the most relevant recipes first.', 'nairobi') ?></p>
                     <div class="input-wrap input-big-check">
-                        <p class="label">Choose options</p>
+                        <p class="label"><?php _e('Choose options', 'nairobi') ?></p>
                         <div class="wrap wrap-items">
 
                             <?php
@@ -59,16 +59,16 @@ $min_meals = 4;
 										<span class="img-wrap">
 											<img src="<?= get_stylesheet_directory_uri() ?>/img/icon-2-3.svg" alt="">
 										</span>
-                                    <span class="text">Regular menu </span>
+                                    <span class="text"><?php _e('Regular menu', 'nairobi') ?> </span>
                                     <span class="check-img"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-3.svg" alt=""></span>
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="input-wrap input-wrap-number-col">
-                        <p class="title">2. Add details </p>
+                        <p class="title"><?php _e('2. Add details', 'nairobi') ?> </p>
                         <div class="number-item num-adults">
-                            <p>Adults </p>
+                            <p><?php _e('Adults', 'nairobi') ?> </p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
                                 <input type="text" name="count_adults" max="<?= $max_adults ?>"  min="1" value="2" class="form-control"/>
@@ -76,7 +76,7 @@ $min_meals = 4;
                             </div>
                         </div>
                         <div class="number-item num-kids">
-                            <p>Kids</p>
+                            <p><?php _e('Kids', 'nairobi') ?></p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
                                 <input type="text" name="count_kids" max="<?= $max_kids ?>" min="0" value="1" class="form-control"/>
@@ -85,7 +85,7 @@ $min_meals = 4;
                         </div>
 
                         <div class="number-item num-meals" style="display: none">
-                            <p>Meals</p>
+                            <p><?php _e('Meals', 'nairobi') ?></p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
                                 <input type="text" name="count_meals" min="<?= $min_meals ?>" max="<?= $max_meals ?>" value="<?= $min_meals ?>" class="form-control"/>
@@ -95,7 +95,7 @@ $min_meals = 4;
 
                     </div>
                     <div class="input-wrap input-wrap-characteristics tabs">
-                        <p class="title">3. Personal characteristics</p>
+                        <p class="title"><?php _e('3. Personal characteristics', 'nairobi') ?></p>
                         <div class="wrap">
                             <div class="select-block">
                                 <div class="nice-select tabs-menu">
@@ -145,30 +145,30 @@ $min_meals = 4;
                 </div>
                 <div class="total-block">
                     <div class="total-wrap">
-                        <p class="sub-title sub-title-box">Discovery box </p>
-                        <p class="info">3 meals for 4 people per week</p>
+                        <p class="sub-title sub-title-box"><?php _e('Discovery box', 'nairobi') ?> </p>
+                        <p class="info"><?php _e('3 meals for 4 people per week', 'nairobi') ?></p>
                         <ul>
                             <li>
-                                <p>Box price</p>
+                                <p><?php _e('Box price', 'nairobi') ?></p>
                                 <p><b class="box_price">$71.88</b></p>
                             </li>
                             <li>
-                                <p>Price per serving</p>
+                                <p><?php _e('Price per serving', 'nairobi') ?></p>
                                 <p><b class="box_price_pp">$5.99</b></p>
                             </li>
                             <li class="last">
-                                <p>First box total</p>
+                                <p><?php _e('First box total', 'nairobi') ?></p>
                                 <p><b class="box_price_total">$71.88</b></p>
                             </li>
                         </ul>
                     </div>
                     <div class="btn-wrap">
-                        <button data-title-reg="<?= __('Choose meal', 'nairobi') ?>" data-title="<?= __('Select', 'nairobi') ?>" type="submit" class="btn-default select-plan">Select </button>
+                        <button data-title-reg="<?= __('Choose meal', 'nairobi') ?>" data-title="<?= __('Select', 'nairobi') ?>" type="submit" class="btn-default select-plan"><?php _e('Select', 'nairobi') ?> </button>
                     </div>
                     <div class="check-total">
                         <input type="checkbox" id="total" name="total">
                         <label for="total" class="total-label">
-                            <span class="text">I want subscibe to mystery box every week</span>
+                            <span class="text"><?php _e('I want subscibe to mystery box every week', 'nairobi') ?></span>
                         </label>
                     </div>
                 </div>

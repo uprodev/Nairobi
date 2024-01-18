@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
 
 <div class="cart_totals <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
     <?php do_action( 'woocommerce_before_cart_totals' ); ?>
-    <p class="sub-title">Totals </p>
+    <p class="sub-title"><?php _e('Totals', 'nairobi') ?> </p>
 <!--    <p class="info">3 meals for 4 people per week</p>-->
     <ul>
         <li>

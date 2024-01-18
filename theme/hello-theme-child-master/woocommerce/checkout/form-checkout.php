@@ -42,7 +42,8 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
                         <div class="info-security">
                             <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-23.svg" alt="">
-                            <p>Nous protégeons vos informations de paiement en utilisant le cryptage pour assurer une sécurité de niveau bancaire.</p>
+                            <p><?php _e('We protect your payment information using encryption to ensure
+                                Bank-level security.', 'nairobi') ?></p>
                         </div>
                     </div>
                 </div>

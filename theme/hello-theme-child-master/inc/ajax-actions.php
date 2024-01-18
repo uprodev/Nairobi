@@ -30,9 +30,9 @@ function add_to_cart()
 
 
     $product_id = (int)$_POST['product_id'] ? (int)$_POST['product_id'] : (int)$_POST['product'];
-    $count = (int)$_POST['count_kids'] + (int)$_POST['count_adults'];
+
     $features = $_POST['feature'];
-    $persons = get_persons();
+
     $qty =  $_POST['qty'];
     WC()->session->get('meals');
     $meals = WC()->session->get('meals');
@@ -42,7 +42,7 @@ function add_to_cart()
         WC()->session->set_customer_session_cookie(true);
         WC()->session->set('adults', $_POST['count_adults']);
         WC()->session->set('kids', $_POST['count_kids']);
-
+        $persons = get_persons();
 
         foreach ($persons as $key => $person) {
             $feature = $features[$key];
@@ -55,6 +55,7 @@ function add_to_cart()
     else {
         //validation max
         $person_cart_qty = [];
+        $persons = get_persons();
         foreach ($persons as $key => $person) {
             foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
                 if ($key !== $cart_item['meta'])
@@ -112,9 +113,7 @@ function filter()
  */
 
 function select_meals() {
-    $count = (int)$_POST['count_kids'] + (int)$_POST['count_adults'];
-    $features = $_POST['feature'];
-    $features = array_slice($features, 0, $count);
+
     WC()->cart->empty_cart();
     WC()->session->set_customer_session_cookie(true);
     WC()->session->set('adults', $_POST['count_adults']);

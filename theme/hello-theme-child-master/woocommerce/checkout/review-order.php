@@ -39,10 +39,10 @@ foreach ($persons as $key=>$person) {
 ?>
 <div class="shop_table woocommerce-checkout-review-order-table">
 <div class="item-aside item-aside-mob">
-    <div class="title title-product">Récapitulatif de la commande</div>
+    <div class="title title-product"><?php _e('Order Summary', 'nairobi') ?></div>
 
     <div class="wrap">
-        <p class="h6"><?= WC()->cart->get_cart_contents_count() ?> éléments dans le panier</p>
+        <p class="h6"><?= WC()->cart->get_cart_contents_count() ?> <?php _e('items in cart', 'nairobi') ?></p>
         <?php
         foreach ($person_cart as $key=>$person) {  ?>
             <div class="user-item">
@@ -117,14 +117,14 @@ foreach ($persons as $key=>$person) {
 
 <?php if ( wc_coupons_enabled() ) { ?>
     <div class="item-aside">
-        <div class="title title-product ">Code promo</div>
+        <div class="title title-product "><?php _e('Promo code', 'nairobi') ?></div>
         <div class="wrap form-wrap" >
             <?php do_action( 'woocommerce_cart_coupon' ); ?>
             <div class="input-wrap input-wrap-login mb-0">
-                <label for="code">Entrez votre code promo</label>
-                <input type="text"   name="code" id="code" placeholder="Gift card or discount code">
+                <label for="code"><?php _e('Enter your promo code', 'nairobi') ?></label>
+                <input type="text"   name="code" id="code" placeholder="<?php _e('Gift card or discount code', 'nairobi') ?>">
                 <br>
-                <a    value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>" class="btn-default apply_coupon_checkout">APPLY</a>
+                <a    value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>" class="btn-default apply_coupon_checkout"><?php _e('APPLY', 'nairobi') ?></a>
 
             </div>
         </div>

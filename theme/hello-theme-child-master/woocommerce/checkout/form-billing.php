@@ -23,33 +23,33 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <div class="item-form">
-    <div class="title">Détails de contact</div>
+    <div class="title"><?php _e('Contact details', 'nairobi') ?></div>
     <div class="input-wrap input-wrap-login input-wrap-50">
-        <label for="billing_first_name">Prénom</label>
+        <label for="billing_first_name"><?php _e('First name', 'nairobi') ?></label>
         <input type="text" id="billing_first_name" name="billing_first_name" value="<?= $checkout->get_value( 'billing_first_name' ) ?>">
     </div>
     <div class="input-wrap input-wrap-login input-wrap-50">
-        <label for="billing_last_name">Nom</label>
+        <label for="billing_last_name"><?php _e('Last Name', 'nairobi') ?></label>
         <input type="text" id="billing_last_name" name="billing_last_name" value="<?= $checkout->get_value( 'billing_last_name' ) ?>">
     </div>
     <div class="input-wrap input-wrap-login">
-        <label for="billing_email">Adresse mail</label>
+        <label for="billing_email"><?php _e('Email address', 'nairobi') ?></label>
         <input type="email" id="billing_email" name="billing_email" value="<?= $checkout->get_value( 'billing_email' ) ?>">
     </div>
 
 </div>
 <div class="item-form">
-    <div class="title">Où voulez-vous être livré ?</div>
+    <div class="title"><?php _e('Where do you want to be delivered?', 'nairobi') ?></div>
     <div class="input-wrap input-wrap-login">
-        <label for="billing_address_1">Rue et numéro</label>
+        <label for="billing_address_1"><?php _e('Street', 'nairobi') ?></label>
         <input type="text" id="billing_address_1" name="billing_address_1" value="<?= $checkout->get_value( 'billing_address_1' ) ?>">
     </div>
     <div class="input-wrap input-wrap-login">
-        <label for="billing_address_2">Numéro de maison, appartement</label>
+        <label for="billing_address_2"><?php _e('House number', 'nairobi') ?></label>
         <input type="text" id="billing_address_2" name="billing_address_2" value="<?= $checkout->get_value( 'billing_address_2' ) ?>">
     </div>
     <div class="input-wrap input-wrap-login input-wrap-50 select-block">
-        <label class="form-label" for="region">State/Province</label>
+        <label class="form-label" for="region"><?php _e('State province', 'nairobi') ?></label>
 
         <?php
         $people_json = file_get_contents(get_stylesheet_directory() . '/inc/france.json');
@@ -57,7 +57,7 @@ defined( 'ABSPATH' ) || exit;
 
         ?>
         <select id="region" name="billing_state">
-            <option value="">Select Your Region</option>
+            <option value=""><?php _e('Select Your Region', 'nairobi') ?></option>
             <?php foreach ($decoded_json as $item) { ?>
                 <option <?php selected($checkout->get_value( 'billing_state' ) , $item['name']) ?> value="<?= $item['name'] ?>"><?= $item['name'] ?></option>
             <?php } ?>
@@ -65,30 +65,30 @@ defined( 'ABSPATH' ) || exit;
         </select>
     </div>
     <div class="input-wrap input-wrap-login input-wrap-50">
-        <label for="billing_city">Ville</label>
+        <label for="billing_city"><?php _e('City', 'nairobi') ?></label>
         <input type="text" id="billing_city" name="billing_city" value="<?= $checkout->get_value( 'billing_city' ) ?>">
     </div>
     <div class="input-wrap input-wrap-login input-wrap-50">
-        <label for="billing_postcode">Code postal</label>
+        <label for="billing_postcode"><?php _e('Postal code', 'nairobi') ?></label>
         <input type="text" id="billing_postcode" name="billing_postcode" placeholder="00000" class="code" value="<?= $checkout->get_value( 'billing_postcode' ) ?>">
     </div>
     <div class="input-wrap input-wrap-login input-wrap-50">
-        <label for="billing_phone">Numéro de téléphone</label>
+        <label for="billing_phone"><?php _e('Phone number', 'nairobi') ?></label>
         <input type="text" id="billing_phone" name="billing_phone" placeholder="(000) 000-0000" class="tel" value="<?= $checkout->get_value( 'billing_phone' ) ?>">
         <input type="hidden" name="billing_code">
 
     </div>
 </div>
 <div class="item-form">
-    <div class="title">Quand voulez-vous être livré ?</div>
+    <div class="title"><?php _e('When do you want it delivered?', 'nairobi') ?></div>
     <div class="input-wrap input-wrap-login input-wrap-50 input-img input-after">
-        <label for="date">Date</label>
+        <label for="date"><?php _e('Date', 'nairobi') ?></label>
         <img src="<?= get_stylesheet_directory_uri() ?>/img/icon-17-1.svg" alt="">
-        <input type="text" id="date" name="date" class="date1" placeholder="01/12/23" value="<?= WC()->session->get('date'); ?>">
+        <input type="text" id="date" name="date" class="date1" placeholder="01/03/24" value="<?= WC()->session->get('date'); ?>">
     </div>
 
     <div class="input-wrap input-wrap-login input-wrap-50 select-block">
-        <label for="time">Heure</label>
+        <label for="time"><?php _e('Hour', 'nairobi') ?></label>
 
         <select id="region" name="billing_state">
             <option <?php selected( WC()->session->get('time') , '9-12h') ?> value="9-12h">9-12h</option>
