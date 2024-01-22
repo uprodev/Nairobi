@@ -107,3 +107,8 @@ footer .footer-form button:hover{
 .iti__country-list {
   z-index: 999;
 }
+
+.e-my-account-tab.e-my-account-tab__dashboard h2 {
+  font-size: 22px;
+  text-align: center;
+}

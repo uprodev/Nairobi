@@ -28,6 +28,7 @@ $persons = get_persons();
 
 
 
+
 //qty
 $person_cart_qty = $person_cart_totals = $person_cart_valid = [];
 
@@ -49,7 +50,7 @@ foreach ($persons as $key=>$person) {
 foreach ($person_cart_qty as $key=>$single_person) {
     $person_cart_valid[$key] = $person_cart_qty[$key] >= $meals ? 'valid' : 'invalid' ;
 }
-$total_valid = array_count_values(array_values($person_cart_valid));
+$total_valid =   array_count_values(array_values($person_cart_valid)) ;
 
 
 do_action( 'woocommerce_before_mini_cart' );
@@ -106,6 +107,9 @@ do_action( 'woocommerce_before_mini_cart' );
                             </figure>
                             <div class="text">
                                 <p><a href="#"><?= $product_name ?></a>
+
+<!--                                    <a href="#" class="remove remove_from_cart_button"  data-product_id="--><?//= $product_id ?><!--" data-cart_item_key="--><?//= $cart_item_key ?><!--"  >×</a>-->
+<!--                                    -->
                                     <?php
                                     echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                                         'woocommerce_cart_item_remove_link',
@@ -167,7 +171,7 @@ do_action( 'woocommerce_before_mini_cart' );
             <div class="btn-wrap">
                 <a
                     data-msg="<?= __('Please add all necessary meals to each person','nairobi') ?>"
-                    href="<?= get_permalink(810) ?>" data-valid="<?= count($total_valid['invalid']) > 0 ? 'invalid' : 'valid' ?>" type="submit" class="btn-default complete-order"><?= __('Complete order', 'nairobi') ?> </a>
+                    href="<?= get_permalink(810) ?>" data-valid="<?=  $total_valid['invalid'] > 0 ? 'invalid' : 'valid' ?>" type="submit" class="btn-default complete-order"><?= __('Complete order', 'nairobi') ?> </a>
             </div>
 
         </div>

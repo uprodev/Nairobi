@@ -31,7 +31,7 @@ function hello_elementor_child_enqueue_scripts() {
 		[
 			'hello-elementor-theme-style',
 		],
-		'1.0.0'
+		'2.0.0'
 	);
 
     wp_enqueue_script( 'wc-cart-fragments' );
@@ -47,7 +47,7 @@ function hello_elementor_child_enqueue_scripts() {
 
 
 
-    if (!is_front_page()) {
+    if (!is_front_page() && !is_account_page()) {
         wp_dequeue_style('elementor-global');
         wp_dequeue_style( 'hello-elementor' );
         wp_dequeue_style( 'elementor-frontend' );

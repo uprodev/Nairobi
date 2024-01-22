@@ -10,6 +10,7 @@ $actions = [
     'login_1',
     'login_2',
     'apply_coupon',
+    'remove_item_from_cart',
 
 
 ];
@@ -217,6 +218,27 @@ function apply_coupon()
     wp_send_json(
         [
             'coupon' => $coupon,
+        ]
+    );
+    die();
+}
+
+/**
+ * remove_item_from_cart
+ * @return void
+ */
+
+function remove_item_from_cart()
+{
+    $cart_item_keys = $_POST['hash'];
+
+    foreach ($cart_item_keys as $cart_item_key) {
+        WC()->cart->remove_cart_item($cart_item_key);
+        $count = WC()->cart->get_cart_contents_count();
+    }
+    wp_send_json(
+        [
+            'count' => $count,
         ]
     );
     die();

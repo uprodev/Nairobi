@@ -159,6 +159,10 @@ jQuery(document).ready(function ($) {
   })
 
 
+  /**
+   * add-to-cat
+   */
+
   $(document).on('click', '.add_to_cart', function(e){
     e.preventDefault();
     var product_id = $(this).attr('data-product_id');
@@ -250,6 +254,34 @@ jQuery(document).ready(function ($) {
       },
     });
   });
+
+  /**
+   * remove_from_cart
+   */
+  $(document).on('click', '.remove_from_cart', function () {
+
+    var item_hash = $(this).attr('data-hash');
+
+    $.ajax({
+      type: 'POST',
+      url: wc_add_to_cart_params.ajax_url,
+      data: {
+        action: 'remove_item_from_cart',
+        hash: [item_hash],
+      },
+      success: function (data) {
+        $(document.body).trigger('wc_update_cart');
+
+        select_current_user()
+      },
+    });
+  })
+
+  $(document).on('removed_from_cart',  function () {
+
+    select_current_user()
+
+  })
 
 
   /**
