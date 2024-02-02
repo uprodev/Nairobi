@@ -39,7 +39,8 @@ $min_meals = 4;
                                 $boxes->the_post();
                                 $i++;
                                 global $post;
-                                $product = new WC_Product(get_the_id())
+                                $product = new WC_Product(get_the_id());
+                                $desc[get_the_id()] =  $product->get_short_description();
                             ?>
                             <div class="item">
                                 <input <?php checked(1, $i) ?> type="radio" data-price="<?= $product->get_price() ?>" value="<?= get_the_id() ?>" id="select-1-<?= $i?>>" name="product">
@@ -79,7 +80,7 @@ $min_meals = 4;
                             <p><?php _e('Kids', 'nairobi') ?></p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                                <input type="text" name="count_kids" max="<?= $max_kids ?>" min="0" value="1" class="form-control"/>
+                                <input type="text" name="count_kids" max="<?= $max_kids ?>" min="0" value="0" class="form-control"/>
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>
@@ -146,15 +147,21 @@ $min_meals = 4;
                 <div class="total-block">
                     <div class="total-wrap">
                         <p class="sub-title sub-title-box"><?php _e('Discovery box', 'nairobi') ?> </p>
-                        <p class="info"><?php _e('3 meals for 4 people per week', 'nairobi') ?></p>
+
+                        <?php foreach ($desc as $id=>$desc_item) { ?>
+                        <div class="info" id="desc-<?= $id ?>">
+                            <?= $desc_item ?>
+                        </div>
+                        <?php } ?>
+
                         <ul>
                             <li>
                                 <p><?php _e('Box price', 'nairobi') ?></p>
                                 <p><b class="box_price">$71.88</b></p>
                             </li>
                             <li>
-                                <p><?php _e('Price per serving', 'nairobi') ?></p>
-                                <p><b class="box_price_pp">$5.99</b></p>
+                                <p><?php _e('Delivery fee', 'nairobi') ?></p>
+                                <p><b class="box_price_pp" data-price="<?= get_lowest_shipping_flat_rate_1() ?>"><?= get_lowest_shipping_flat_rate_1() ?></b></p>
                             </li>
                             <li class="last">
                                 <p><?php _e('First box total', 'nairobi') ?></p>

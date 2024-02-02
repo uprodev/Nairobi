@@ -43,16 +43,25 @@ function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_script('my-script', get_stylesheet_directory_uri() . '/js/script.js', array(), false, true);
     wp_enqueue_script('intlTelInput',  'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput-jquery.min.js', array(), false, 2);
     wp_enqueue_script('intlTelInpututils',  'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js', array(), false, 2);
-    wp_enqueue_script('actions', get_stylesheet_directory_uri() . '/js/actions.js', array(), false, 2);
+    wp_enqueue_script('actions', get_stylesheet_directory_uri() . '/js/actions.js?v=2', array(), false, rand(0,99999));
 
 
+    if( is_page_template( [
+        'page-templates/catalog.php',
+        'page-templates/checkout.php',
+        'page-templates/choose.php',
+        'page-templates/delivery.php',
+        'page-templates/login.php' ] ) ) {
 
-    if (!is_front_page() && !is_account_page()) {
         wp_dequeue_style('elementor-global');
         wp_dequeue_style( 'hello-elementor' );
         wp_dequeue_style( 'elementor-frontend' );
         wp_deregister_style( 'elementor-frontend' );
     }
+
+//    if (!is_front_page() && !is_account_page()) {
+//
+//    }
 
     wp_enqueue_style('woocommerce_stylesheet',false,'1.0',"all");
 
@@ -168,3 +177,27 @@ add_action('template_redirect', function(){
     }
 
 });
+
+
+
+function get_lowest_shipping_flat_rate_1()
+{
+    $delivery_zones = WC_Shipping_Zones::get_zones();
+
+    //define the array outside of the loop
+    $shipping_costs = [];
+    $min_zone = "";
+
+    //get all costs in a loop and store them in the array
+    foreach ((array) $delivery_zones as $key => $the_zone ) {
+
+        foreach ($the_zone['shipping_methods'] as $value) {
+            $shipping_costs[] = $value->cost;
+            if(min($shipping_costs) == $value->cost) $min_zone = $the_zone['zone_name'];
+        }
+    }
+
+    $content =   min($shipping_costs);
+
+    return $content;
+}

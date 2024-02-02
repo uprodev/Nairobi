@@ -44,11 +44,11 @@ defined( 'ABSPATH' ) || exit;
             </li>
         <?php endforeach; ?>
 
-        <?php if ( WC()->cart->needs_shipping() && 'yes' === get_option( 'woocommerce_enable_shipping_calc' ) ) : ?>
+        <?php if ( WC()->cart->needs_shipping()  ) : ?>
 
         <li class="shipping">
             <p><?php esc_html_e( 'Shipping', 'woocommerce' ); ?></p>
-            <p data-title="<?php esc_attr_e( 'Shipping', 'woocommerce' ); ?>"><b><?php woocommerce_shipping_calculator(); ?></b></p>
+            <p data-title="<?php esc_attr_e( 'Shipping', 'woocommerce' ); ?>"><b><?= WC()->cart->get_cart_shipping_total(); ?></b></p>
         </li>
 
         <?php endif; ?>

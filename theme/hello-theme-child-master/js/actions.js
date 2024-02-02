@@ -8,12 +8,13 @@ jQuery(document).ready(function ($) {
   change_persons()
   $('.wrap-items input').change();
   $('.input-wrap-number-col').change();
-
+  $('.num-kids').hide();
   $('.wrap-items input').change(function(){
     change_price();
     var title = $(this).closest('.item').find('.text').html();
     $('.sub-title-box').html(title);
     var val = $(this).val();
+
 
     if ('regular' === val) {
       $('.total-block .total-wrap').hide();
@@ -23,12 +24,19 @@ jQuery(document).ready(function ($) {
       $('.select-plan').html(title);
       $('[name="action"]').val('select_meals');
     } else {
+      $('.info').hide();
       $('.num-meals').hide();
       $('.total-block .total-wrap').show();
       $('.input-wrap-characteristics').show();
       var title = $('.select-plan').attr('data-title');
       $('.select-plan').html(title);
       $('[name="action"]').val('add_to_cart');
+      $('#desc-' + val).show();
+      $('.num-kids').show();
+      if (val === "692") {
+        $('.num-kids').hide();
+        $('.num-kids input').val(0);
+      }
     }
   })
 
@@ -86,8 +94,11 @@ jQuery(document).ready(function ($) {
       var total_pp = total/(a+k);
 
       $('.box_price').html('€' + price);
-      $('.box_price_pp').html('€' + price);
-      $('.box_price_total').html('€' + total);
+
+      var delivery =  parseFloat($('.box_price_pp').attr('data-price'))
+      var totalDelivery = Math.round((total + delivery) * 100) / 100;
+      $('.box_price_pp').html('€' + delivery);
+      $('.box_price_total').html('€' + totalDelivery);
   }
 
 
