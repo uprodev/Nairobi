@@ -11,6 +11,7 @@ $actions = [
     'login_2',
     'apply_coupon',
     'remove_item_from_cart',
+    'dynamic_cart',
 
 
 ];
@@ -32,26 +33,16 @@ function add_to_cart()
 
     $product_id = (int)$_POST['product_id'] ? (int)$_POST['product_id'] : (int)$_POST['product'];
 
-    $features = $_POST['feature'];
+
 
     $qty =  $_POST['qty'];
     WC()->session->get('meals');
     $meals = WC()->session->get('meals');
-    //boxes
     if ($_POST['count_kids'] || $_POST['count_adults']) {
-        WC()->cart->empty_cart();
-        WC()->session->set_customer_session_cookie(true);
-        WC()->session->set('adults', $_POST['count_adults']);
-        WC()->session->set('kids', $_POST['count_kids']);
-        $persons = get_persons();
+        //boxes
 
-        foreach ($persons as $key => $person) {
-            $feature = $features[$key];
-            WC()->cart->add_to_cart($product_id, 1, '','', ['meta' => $key, 'features' => $feature]);
-
-        }
-        $url = get_permalink(810);
     }
+
     //meals
     else {
         //validation max
@@ -242,4 +233,112 @@ function remove_item_from_cart()
         ]
     );
     die();
+}
+
+
+/**
+ * dynamic_cart
+ */
+
+
+add_action( 'woocommerce_cart_calculate_fees', 'wpf_wc_add_cart_fees_by_cart_total_weight' );
+function wpf_wc_add_cart_fees_by_cart_total_weight( $cart ) {
+    /**
+     * wpf_wc_add_cart_fees_by_cart_total_weight.
+     */
+    if ($_POST['product'] == 696) {
+        if ($cd = $_POST['count_deserts']) {
+            $fee = $cd * 3.99;
+            WC()->cart->add_fee(__('Dessert x ', 'nairoby') .$cd , $fee);
+        }
+        if ($_POST['count_drinks']) {
+            $fee = $_POST['count_drinks'] * 3.99;
+            WC()->cart->add_fee(__('Drinks x ', 'nairoby') .$_POST['count_drinks'] , $fee);
+        }
+    }
+
+}
+
+
+function dynamic_cart() {
+    $features = $_POST['feature'];
+    $product_id = (int)$_POST['product'];
+    if ($_POST['count_kids'] || $_POST['count_adults']) {
+        WC()->cart->empty_cart();
+        WC()->session->set_customer_session_cookie(true);
+        WC()->session->set('adults', $_POST['count_adults']);
+        WC()->customer->set_billing_country('BE');
+        $persons = get_persons();
+
+        foreach ($persons as $key => $person) {
+            $feature = $features[$key];
+            WC()->cart->add_to_cart($product_id, 1, '','', ['meta' => $key, 'features' => $feature]);
+
+        }
+
+    }
+    add_action( 'woocommerce_cart_calculate_fees', 'wpf_wc_add_cart_fees_by_cart_total_weight' );
+
+
+
+    ob_start();
+    ?>
+
+
+    <li>
+        <p><?php _e('Box price', 'nairobi') ?></p>
+        <p><b class="box_price"><?= wc_cart_totals_subtotal_html() ?></b></p>
+    </li>
+
+    <?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
+        <li class="fee">
+            <p><?php echo esc_html( $fee->name ); ?></p>
+            <p data-title="<?php echo esc_attr( $fee->name ); ?>"><b><?php wc_cart_totals_fee_html( $fee ); ?></b></p>
+        </li>
+    <?php endforeach; ?>
+
+    <?php
+    if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) {
+        $taxable_address = WC()->customer->get_taxable_address();
+        $estimated_text  = '';
+
+        if ( WC()->customer->is_customer_outside_base() && ! WC()->customer->has_calculated_shipping() ) {
+            /* translators: %s location. */
+            $estimated_text = sprintf( ' <small>' . esc_html__( '(estimated for %s)', 'woocommerce' ) . '</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] );
+        }
+
+        if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) {
+            foreach ( WC()->cart->get_tax_totals() as $code => $tax ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+                ?>
+                <li class="tax-rate tax-rate-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
+                    <p><?php echo esc_html( $tax->label ) . $estimated_text; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+                    <p data-title="<?php echo esc_attr( $tax->label ); ?>"><b><?php echo wp_kses_post( $tax->formatted_amount ); ?></b></p>
+                </li>
+                <?php
+            }
+        } else {
+            ?>
+            <li class="tax-total">
+                <p><?php echo esc_html( WC()->countries->tax_or_vat() ) . $estimated_text; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+                <p data-title="<?php echo esc_attr( WC()->countries->tax_or_vat() ); ?>"><b><?php wc_cart_totals_taxes_total_html(); ?></b></p>
+            </li>
+            <?php
+        }
+    }
+    ?>
+
+    <li>
+        <p><?php _e('Delivery fee', 'nairobi') ?></p>
+        <p><b class="box_price_pp" ><?= WC()->cart->get_cart_shipping_total() ?></b></p>
+    </li>
+    <li class="last">
+        <p><?php _e('First box total', 'nairobi') ?></p>
+        <p><b class="box_price_total"><?php wc_cart_totals_order_total_html(); ?></b></p>
+    </li>
+<?php
+    $html = ob_get_clean();
+
+    wp_send_json([
+        'html' => $html
+    ]);
 }

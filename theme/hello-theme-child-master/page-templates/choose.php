@@ -72,7 +72,7 @@ $min_meals = 4;
                             <p><?php _e('Adults', 'nairobi') ?> </p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                                <input type="text" name="count_adults" max="<?= $max_adults ?>"  min="1" value="2" class="form-control"/>
+                                <input readonly type="text" name="count_adults" max="<?= $max_adults ?>"  min="1" value="2" class="form-control"/>
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@ $min_meals = 4;
                             <p><?php _e('Kids', 'nairobi') ?></p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                                <input type="text" name="count_kids" max="<?= $max_kids ?>" min="0" value="0" class="form-control"/>
+                                <input readonly type="text" name="count_kids" max="<?= $max_kids ?>" min="0" value="0" class="form-control"/>
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>
@@ -89,10 +89,31 @@ $min_meals = 4;
                             <p><?php _e('Meals', 'nairobi') ?></p>
                             <div class="input-number ">
                                 <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
-                                <input type="text" name="count_meals" min="<?= $min_meals ?>" max="<?= $max_meals ?>" value="<?= $min_meals ?>" class="form-control"/>
+                                <input readonly type="text" name="count_meals" min="<?= $min_meals ?>" max="<?= $max_meals ?>" value="<?= $min_meals ?>" class="form-control"/>
                                 <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
                             </div>
                         </div>
+
+
+                        <!--  for mystery box -->
+                        <div class="number-item num-mb" style="display: none">
+                            <p><?php _e('Dessert', 'nairobi') ?> (+3,99€)</p>
+                            <div class="input-number ">
+                                <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
+                                <input readonly type="text" name="count_deserts" min="0" max="<?= $max_meals ?>" value="0" class="form-control"/>
+                                <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
+                            </div>
+                        </div>
+
+                        <div class="number-item num-mb" style="display: none">
+                            <p><?php _e('Drinks', 'nairobi') ?> (+3,99€)</p>
+                            <div class="input-number ">
+                                <div class="btn-count btn-count-plus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-2.svg" alt=""></div>
+                                <input readonly type="text" name="count_drinks" min="0" max="<?= $max_meals ?>" value="0" class="form-control"/>
+                                <div class="btn-count btn-count-minus"><img src="<?= get_stylesheet_directory_uri() ?>/img/icon-4-1.svg" alt=""></div>
+                            </div>
+                        </div>
+                        <!--  /for mystery box -->
 
                     </div>
                     <div class="input-wrap input-wrap-characteristics tabs">
@@ -154,23 +175,23 @@ $min_meals = 4;
                         </div>
                         <?php } ?>
 
-                        <ul>
+                        <ul class="dynamic-cart">
                             <li>
                                 <p><?php _e('Box price', 'nairobi') ?></p>
-                                <p><b class="box_price">$71.88</b></p>
+                                <p><b class="box_price">-</b></p>
                             </li>
                             <li>
                                 <p><?php _e('Delivery fee', 'nairobi') ?></p>
-                                <p><b class="box_price_pp" data-price="<?= get_lowest_shipping_flat_rate_1() ?>"><?= get_lowest_shipping_flat_rate_1() ?></b></p>
+                                <p><b class="box_price_pp" data-price="<?= get_lowest_shipping_flat_rate_1() ?>">-</b></p>
                             </li>
                             <li class="last">
                                 <p><?php _e('First box total', 'nairobi') ?></p>
-                                <p><b class="box_price_total">$71.88</b></p>
+                                <p><b class="box_price_total">-</b></p>
                             </li>
                         </ul>
                     </div>
                     <div class="btn-wrap">
-                        <button data-title-reg="<?= __('Choose meal', 'nairobi') ?>" data-title="<?= __('Select', 'nairobi') ?>" type="submit" class="btn-default select-plan"><?php _e('Select', 'nairobi') ?> </button>
+                        <button data-url="<?= the_permalink(810) ?>" data-title-reg="<?= __('Choose meal', 'nairobi') ?>" data-title="<?= __('Select', 'nairobi') ?>" type="submit" class="btn-default select-plan"><?php _e('Select', 'nairobi') ?> </button>
                     </div>
                     <div class="check-total">
                         <input type="checkbox" id="total" name="total">

@@ -4,13 +4,18 @@ jQuery(document).ready(function ($) {
    * change_price
    */
 
-  change_price()
-  change_persons()
+  var product = $('.wrap-items input:checked').val();
+  //change_price()
+  setTimeout(function(){
+    $('.wrap-items input:checked').change()
+  }, 300)
+
+  change_persons();
   $('.wrap-items input').change();
   $('.input-wrap-number-col').change();
   $('.num-kids').hide();
   $('.wrap-items input').change(function(){
-    change_price();
+    //change_price();
     var title = $(this).closest('.item').find('.text').html();
     $('.sub-title-box').html(title);
     var val = $(this).val();
@@ -24,25 +29,63 @@ jQuery(document).ready(function ($) {
       $('.select-plan').html(title);
       $('[name="action"]').val('select_meals');
     } else {
+      $('[name="action"]').val('dynamic_cart');
       $('.info').hide();
       $('.num-meals').hide();
       $('.total-block .total-wrap').show();
       $('.input-wrap-characteristics').show();
       var title = $('.select-plan').attr('data-title');
-      $('.select-plan').html(title);
-      $('[name="action"]').val('add_to_cart');
+      $('.select-plan').html(title)
       $('#desc-' + val).show();
       $('.num-kids').show();
-      if (val === "692") {
+      $('.num-mb').hide();
+      $('.num-adults p').html('Adults')
+      if (val !== "692") {
         $('.num-kids').hide();
         $('.num-kids input').val(0);
+        $('.num-mb').show();
+        $('.num-adults p').html('Meals (+12,50€)')
       }
+
+
+      dynamic_cart(val)
+      return false  ;
+
+
+
+
     }
   })
 
+
+  function dynamic_cart(val) {
+    $.ajax({
+      url: '/wp-admin/admin-ajax.php',
+      data: $('.box-form').serialize(),
+      data0: {
+        action: 'dynamic_cart',
+        product_id: val,
+        qty: $('[name="count_adults"]').val(),
+        count_drinks: $('[name="count_drinks"]').val(),
+        count_deserts: $('[name="count_deserts"]').val(),
+      },
+      type: 'POST',
+      dataType: 'json',
+      success: function (data) {
+        if (data) {
+          console.log(data)
+
+          $('.dynamic-cart').html(data.html)
+
+        }
+      }
+    });
+  }
+
   $('.input-wrap-number-col').change(function(){
-    change_price();
+   // change_price();
     change_persons();
+    dynamic_cart(product)
   })
 
   function change_persons()  {
@@ -70,13 +113,14 @@ jQuery(document).ready(function ($) {
   }
 
   $('.check-item input').change(function(){
-    change_price()
+
     var val = $(this).val();
     var prop = $(this).prop('checked');
     var apply = $('[name="apply-to-all"]').prop('checked');
     if (apply) {
       $('.tab-content-features [value="'+ val +'"]' ).prop('checked', prop);
     }
+    dynamic_cart(product)
   })
 
 
@@ -109,7 +153,12 @@ jQuery(document).ready(function ($) {
   $('.box-form').submit(function(e){
     e.preventDefault();
     var data = $(this).serialize();
-    console.log(data)
+
+
+    if ($('[name="action"]').val() == 'dynamic_cart')
+      location.href = $('.select-plan').attr('data-url')
+
+
     $.ajax({
       url: '/wp-admin/admin-ajax.php',
       data: data,
